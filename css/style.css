@@ -1,0 +1,75 @@
+*,*::before,*::after{
+    padding:0;
+    margin:0;
+    
+}
+
+body{
+    background-color: #fff4e9;
+}
+
+label{
+    color:white;
+    padding: .5em;
+    font-size: 25px;
+
+}
+
+form{
+    display:flex;
+    flex-direction: column;
+    background-color: #d4a846;
+    align-items: center;  
+    justify-content: center;
+    width:60%;
+    height: auto ;
+    margin:0 auto;
+    
+    border-radius:50px;
+}
+
+.container-one{
+    padding-top: 100px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+.login-btn{
+    width: 10em;
+    margin:30px;
+    border:none;
+    padding:5px;
+    border-radius: 50px;
+    color: white;
+    border-color:#182a38;
+    background-color: #182a38;
+   
+}
+.login-btn:hover{ 
+    border: 1px solid white;
+}
+
+a{
+    font-weight: 800;
+    color: #bb5939;
+    text-decoration: none;
+    
+}
+
+input{
+    width:min(20em,12em);
+    height:25px;
+}
+
+.signup-link{
+    margin-top:20px;
+}
+
+/* Changes the width of the input bar for computer devices */
+@media only screen and (min-width: 650px) {
+    input{
+        width: 300px;
+    }
+}
