@@ -5,13 +5,16 @@
 }
 
 body{
-    background-color: #fff4e9;
+    background-image: url('/images/waveBackground.png');
+    background-size: cover;
 }
 
 label{
     color:white;
     padding: .5em;
     font-size: 25px;
+    font-family: fantasy;
+    text-transform: uppercase;
 
 }
 
@@ -38,13 +41,15 @@ form{
 
 .login-btn{
     width: 10em;
-    margin:30px;
-    border:none;
-    padding:5px;
-    border-radius: 50px;
-    color: white;
-    border-color:#182a38;
-    background-color: #182a38;
+    margin: 30px;
+    border: none;
+    padding: 5px;
+    border-radius: 30px; /* Softer rounded corners */
+    color: #182a38; 
+    background-color: #f9d876;
+    font-family: 'Pacifico', cursive; /* Using the same font as the labels for consistency */
+    font-size: 17px; /* Slightly larger text for better readability */
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for depth */ 
    
 }
 .login-btn:hover{ 
@@ -59,12 +64,19 @@ a{
 }
 
 input{
-    width:min(20em,12em);
-    height:25px;
+    width: min(20em, 12em);
+    height: 5px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 2px solid #ccc;
+    border-radius: 30px; /* Round the corners of the input box */
+    background-color: #f9f9f9; 
+    box-shadow: 0 10px 5px rgba(0, 0, 0, 0.1); 
 }
 
 .signup-link{
     margin-top:20px;
+    font-family: fantasy;
 }
 
 /* Changes the width of the input bar for computer devices */
