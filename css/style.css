@@ -8,12 +8,20 @@
     --width:min(50%,300px);
 }
 body{
-    background-color: #AAA239;
-    
+    background-image: url('/images/waveBackground.png');
+    background-size: cover;
 }
 
+label{
+    color:white;
+    padding: .5em;
+    font-size: 25px;
+    font-family: fantasy;
+    text-transform: uppercase;
 
-.container-one{
+}
+
+form{
     display:flex;
     flex-direction: column;
     height: 100vh;
@@ -36,60 +44,40 @@ body{
     padding: 50px;
 }
 
-.form-input{
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-    width:60%;
-}
-
-.form-links{
-   
-    margin-bottom: 30px;
-
-}
-
-.form-links a{
-    margin-left:20px;
-    text-decoration-thickness: .15rem;
-    color:#FFFCCE;
-    font-size: 1.2rem;
-}
-
-.form-links a:hover{
-    color:#A9A238;
-
-}
-
-
-.form-input{
-    width:var(--width);
-
-}
 .login-btn{
-    font:inherit;
-    font-weight: 600;
-    padding: 2rem, 2rem;
-
-    margin-top: 30px;
-    border:1px solid;
-    width:var(--width);
-    height: 35px;
-    border-radius: 25px;
-    background-color: transparent;
-    border-color:#FFFCCE;
-    color:#FFFCCE;
-
-}
-
-.login-btn:hover{
-    background: #D7D06E;
-}
-
-.form-input input{
+    width: 10em;
+    margin:30px;
+    border:none;
+    padding:5px;
     border-radius: 50px;
-    height:15px;
-    padding:10px;
+    color: white;
+    border-color:#182a38;
+    background-color: #182a38;
+   
+}
+.login-btn:hover{ 
+    border: 1px solid white;
 }
 
+a{
+    font-weight: 800;
+    color: #bb5939;
+    text-decoration: none;
+    
+}
 
+input{
+    width:min(20em,12em);
+    height:25px;
+}
+
+.signup-link{
+    margin-top:20px;
+}
+
+/* Changes the width of the input bar for computer devices */
+@media only screen and (min-width: 650px) {
+    input{
+        width: 300px;
+    }
+}
