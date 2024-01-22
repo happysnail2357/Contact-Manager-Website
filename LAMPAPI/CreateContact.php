@@ -43,7 +43,7 @@
 
         # Writes the sql statement to insert the contact into the database
         $stmt = $conn->prepare("INSERT into Contacts (FirstName, LastName, Phone, Email, Address, Age, Birthday, Emoji, UserID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-        $stmt->bind_param("sssssssss", $firstName, $lastName, $phone, $email, $address, $age, $birthday, $emoji, $userId);
+        $stmt->bind_param("ssssssssi", $firstName, $lastName, $phone, $email, $address, $age, $birthday, $emoji, $userId);
         
         $stmt->execute();
         $stmt->store_result();
@@ -76,7 +76,7 @@
 	
 	function returnWithInfo($msg)
 	{
-		$retValue = '{"msg":' .$msg. ',"error":""}';
+		$retValue = '{"msg":"' .$msg. '","error":""}';
 		sendResultInfoAsJson($retValue);
 	}
 ?>
