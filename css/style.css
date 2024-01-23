@@ -47,7 +47,7 @@ label{
     border-radius: 30px; /* Softer rounded corners */
     color: #182a38; 
     background-color: #f9d876;
-    font-family: 'Pacifico', cursive; /* Using the same font as the labels for consistency */
+    font-family: fantasy; /* Using the same font as the labels for consistency */
     font-size: 17px; /* Slightly larger text for better readability */
     box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for depth */ 
    
