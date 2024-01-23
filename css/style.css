@@ -72,6 +72,7 @@ input{
     border-radius: 30px; /* Round the corners of the input box */
     background-color: #f9f9f9; 
     box-shadow: 0 10px 5px rgba(0, 0, 0, 0.1); 
+    opacity: 0.4;
 }
 
 .signup-link{
