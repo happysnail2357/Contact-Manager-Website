@@ -9,6 +9,15 @@ body{
     background-size: cover;
 }
 
+h2 {
+    text-align: center;
+    color:white;
+    padding: .5em;
+    font-size: 30px;
+    font-family: fantasy;
+    text-transform: uppercase;
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for depth */ 
+}
 label{
     color:white;
     padding: .5em;
@@ -18,17 +27,8 @@ label{
 
 }
 
-form{
-    display:flex;
-    flex-direction: column;
-    background-color: #d4a846;
-    align-items: center;  
-    justify-content: center;
-    width:60%;
-    height: auto ;
-    margin:0 auto;
-    
-    border-radius:50px;
+.button-container {
+    text-align: center;
 }
 
 .container-one{
@@ -64,7 +64,7 @@ a{
 }
 
 input{
-    width: min(20em, 12em);
+    width: 25vw;
     height: 5px;
     padding: 10px;
     margin-bottom: 15px;
@@ -77,11 +77,4 @@ input{
 .signup-link{
     margin-top:20px;
     font-family: fantasy;
-}
-
-/* Changes the width of the input bar for computer devices */
-@media only screen and (min-width: 650px) {
-    input{
-        width: 300px;
-    }
 }
