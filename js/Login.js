@@ -1,8 +1,8 @@
 
 
-    const button = document.getElementById("login-btn");
+const button = document.getElementById("login-btn");
 
-	button.addEventListener("click", doLogin);
+button.addEventListener("click", doLogin);
 
 
 function doLogin(){
@@ -15,8 +15,9 @@ function doLogin(){
 	//console.log(tmp);
 
 	let jsonPayload = JSON.stringify( tmp );
-	urlBase = "http://159.203.170.88/LAMPAPI"
-	let url = urlBase + '/Login.php' ;
+	
+	let url ='http://159.203.170.88/LAMPAPI/Login.php' ;
+
 
 	let xhr = new XMLHttpRequest();
 	xhr.open("POST", url, true);
