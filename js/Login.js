@@ -16,7 +16,7 @@ function doLogin(){
 
 	let jsonPayload = JSON.stringify( tmp );
 	
-	let url ='http://159.203.170.88/LAMPAPI/Login.php' ;
+	let url ="https://cardboardmc.com/LAMPAPI/Login.php";
 
 
 	let xhr = new XMLHttpRequest();
