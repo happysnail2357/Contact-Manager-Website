@@ -1,42 +1,72 @@
 
-
 const button = document.getElementById("login-btn");
 
-button.addEventListener("click", doLogin);
+if(button)
+{
+	button.addEventListener("click", doLogin);
+
+}
+
+let jsonObject;
 
 
 function doLogin(){
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
 
-	let tmp = {login:login,password:password};
+	let temp = {login:login,password:password};
 
-	
-	//console.log(tmp);
 
-	let jsonPayload = JSON.stringify( tmp );
 	
 	let url ="https://cardboardmc.com/LAMPAPI/Login.php";
 
-
-	let xhr = new XMLHttpRequest();
-	xhr.open("POST", url, true);
-	xhr.setRequestHeader("Content-type", "application/json; charset=UTF-8");
-	try
+	
+  	
+  
+  postData(url, temp).then((data) => 
 	{
-		xhr.onreadystatechange = function() 
-		{
-			if (this.readyState == 4 && this.status == 200) 
-			{
-				let jsonObject = JSON.parse( xhr.responseText );
-                console.log(jsonObject);
-				window.location.href = "landing-page.html";
-			}
-		};
-		xhr.send(jsonPayload);
-	}
-	catch(err)
-	{
-		console.log(err);
-	}
+		if(data.id !=0){
+			jsonObject=data;
+			saveCookie();
+			window.location.href = "landing-page.html";
+		}
+  
+	});
+	
 }
+
+function saveCookie()
+{
+	let minutes = 20;
+	let date = new Date();
+	date.setTime(date.getTime()+(minutes*60*1000));	
+	document.cookie = "firstName=" + jsonObject.firstName + ",lastName=" + jsonObject.lastName + ",userId=" + jsonObject.id + ",expires=" + date.toGMTString();
+
+	
+	
+}
+
+
+async function postData(url = "", data = {}) 
+{
+	
+		const response = await fetch(url, 
+		{
+			method: "POST", 
+			mode: "cors", 
+			cache: "no-cache", 
+			credentials: "omit", 
+			headers:
+			{
+				"Content-Type": "application/json",
+				
+			},
+			redirect: "follow", 
+			referrerPolicy: "no-referrer", 
+			body: JSON.stringify(data), 
+		});
+		return response.json(); 
+}
+
+
+
