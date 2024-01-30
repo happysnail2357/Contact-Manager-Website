@@ -8,6 +8,7 @@ body{
     background-image: url('/images/waveBackground.png');
     background-size: cover;
     font-family: fantasy;
+    
 }
 .title{
     font-weight: 900;
