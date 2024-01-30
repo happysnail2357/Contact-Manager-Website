@@ -15,7 +15,7 @@
     # Checks to see if there is any contact with the
     $query = '%' .$inData["query"]. '%';
     $stmt = $conn->prepare("SELECT * FROM Contacts WHERE concat(FirstName, ' ', LastName) LIKE ? AND UserID=?");
-    $stmt->bind_param("si", $query, $inData["id"]);
+    $stmt->bind_param("si", $query, $inData["userId"]);
 
     $stmt->execute();
     $result = $stmt->get_result();
