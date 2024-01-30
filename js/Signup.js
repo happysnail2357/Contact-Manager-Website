@@ -20,11 +20,12 @@ function doLogin(){
 
   postData(url, temp).then((data) => 
 	{
-		if(data.id !=0){
-			jsonObject=data;
-			saveCookie();
-			window.location.href = "landing-page.html";
-		}
+		// if(data.id !=0){
+		// 	jsonObject=data;
+		// 	saveCookie();
+		// 	window.location.href = "landing-page.html";
+		// }
+        console.log(data);
 	});
 }
 
