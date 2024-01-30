@@ -22,17 +22,15 @@ function doLogin(){
 	};
 	
 	let url ="https://cardboardmc.com/LAMPAPI/Register.php";
-	
-	postData(url, temp).then((data) =>  {
-		jsonObject = data;
-		if(data.id !=0)
-		{
+
+  postData(url, temp).then((data) => 
+	{
+		if(data.error != null){
 			jsonObject=data;
 			saveCookie();
 			window.location.href = "landing-page.html";
 		}
-	})
-	.catch(error => console.log(error));
+	});
 }
 
 function saveCookie()

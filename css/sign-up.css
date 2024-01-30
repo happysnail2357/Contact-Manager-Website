@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+
 *,*:before,*:after{
     margin:0;
     padding:0;
@@ -7,13 +9,13 @@ body{
     /* background-color: #EFF9C7; */
     background-image: url('/images/waveBackground.png');
     background-size: cover;
-    font-family: fantasy;
+    font-family: 'Gowun Batang', serif;
     
 }
 .title{
     font-weight: 900;
     font-size: 1.8rem;
-    font-family: fantasy;
+    font-family: 'Gowun Batang', serif;
     margin:0 auto;
     
 }
