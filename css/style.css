@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap');
+
 *,*::before,*::after{
     padding:0;
     margin:0;
@@ -14,7 +16,7 @@ h2 {
     color:white;
     padding: .5em;
     font-size: 30px;
-    font-family: fantasy, sans-serif;
+    font-family: 'Gowun Batang', serif;
     text-transform: uppercase;
     box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for depth */ 
 }
@@ -22,7 +24,7 @@ label{
     color:white;
     padding: .5em;
     font-size: 25px;
-    font-family: fantasy, sans-serif;
+    font-family: 'Gowun Batang', serif;
     text-transform: uppercase;
 
 }
@@ -47,7 +49,7 @@ label{
     border-radius: 30px; /* Softer rounded corners */
     color: #182a38; 
     background-color: #f9d876;
-    font-family: fantasy, sans-serif; /* Using the same font as the labels for consistency */
+    font-family: 'Gowun Batang', serif; /* Using the same font as the labels for consistency */
     font-size: 17px; /* Slightly larger text for better readability */
     box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for depth */ 
    
@@ -77,5 +79,5 @@ input{
 
 .signup-link{
     margin-top:20px;
-    font-family: fantasy, sans-serif;
+    font-family: 'Gowun Batang', serif;
 }
