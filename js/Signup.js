@@ -10,7 +10,7 @@ let jsonObject;
 
 function doLogin(){
 	let login = document.getElementById("username").value;
-	let password = document.getElementById("password").value;
+	let password = document.getElementById("pass").value;
     let firstName = document.getElementById("f-name").value;
     let lastName = document.getElementById("l-name").value;
 
