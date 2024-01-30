@@ -1,22 +1,22 @@
 
-const button = document.getElementById("login-btn");
+const button = document.getElementById("sign-up-btn");
 
 if(button)
 {
 	button.addEventListener("click", doLogin);
-
 }
 
 let jsonObject;
 
-
 function doLogin(){
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
+    let firstName = document.getElementById("f-name").value;
+    let lastName = document.getElementById("l-name").value;
 
-	let temp = {login:login,password:password};
+	let temp = {login:login,password:password,firstname:firstName,lastname:lastName};
 
-	let url ="https://cardboardmc.com/LAMPAPI/Login.php";
+	let url ="https://cardboardmc.com/LAMPAPI/Register.php";
 
   postData(url, temp).then((data) => 
 	{
@@ -25,9 +25,7 @@ function doLogin(){
 			saveCookie();
 			window.location.href = "landing-page.html";
 		}
-  
 	});
-	
 }
 
 function saveCookie()
