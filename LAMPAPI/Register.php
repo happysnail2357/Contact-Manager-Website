@@ -1,7 +1,29 @@
 <?php
 	# Gets the input
 	$inData = getRequestInfo();
-	
+
+	# Checks to see if the any of the required fields are null
+	if($inData['login'] == NULL)
+	{
+		returnWithError('Login cannot be null.');
+		return;
+	}
+	else if($inData['password'] == NULL)
+	{
+		returnWithError('Password cannot be null.');
+		return;
+	}
+	else if($inData['firstName'] == NULL)
+	{
+		returnWithError('firstName cannot be null.');
+		return;
+	}
+	else if($inData['lastName'] == NULL)
+	{
+		returnWithError('lastName cannot be null.');
+		return;
+	}
+
 	# Attempts to connect to the database
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 	
@@ -10,8 +32,6 @@
 		returnWithError($conn->connect_error);
 		return;
 	}
-
-	# Checks to see if the any of the required fields are null
 	
 	# Checks if the login already exists
 	$stmt = $conn->prepare("SELECT ID FROM Users WHERE LOGIN=?");
@@ -32,26 +52,27 @@
 	# Writes the sql statement to insert the user into the database
 	$stmt = $conn->prepare("INSERT into Users (Login,Password, firstName,lastName) VALUES(?, ?, ?, ?)");
 	$stmt->bind_param("ssss", $inData["login"], $inData["password"], $inData["firstName"], $inData["lastName"]);
-
-	try
+	$stmt->execute();
+	$stmt->store_result();
+	
+	if($stmt->affected_rows <= 0)
 	{
-		$stmt->execute();
-	}catch(Exception $e)
-	{
-		// returnWithError("in catch");
-		// returnWithError("indata = " .implode(', ', $inData));
-		returnWithError($e->getMessage());
+		returnWithError("The user was not able to be added to the database.");
+		$stmt->close();
+		$conn->close();
 		return;
 	}
-	
-	$stmt->store_result();
 
-	// returnWithError("here");
-	
-	if($stmt->affected_rows > 0)
-		returnWithInfo("The user was added to the database.");
+	# Writes the sql statement to select the user
+	$stmt = $conn->prepare("SELECT ID,firstName,lastName,dateLastLoggedIn FROM Users WHERE Login=? AND Password =?");
+	$stmt->bind_param("ss", $inData["login"], $inData["password"]);
+	$stmt->execute();
+	$result = $stmt->get_result();
+
+	if($row = $result->fetch_assoc())
+		returnWithInfo($row['firstName'], $row['lastName'], $row['dateLastLoggedIn'], $row['ID']);
 	else
-		returnWithError("The user was not able to be added to the database.");
+		returnWithError("Could not get the user's id.");
 
 	$stmt->close();
 	$conn->close();
@@ -73,9 +94,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo($msg)
+	function returnWithInfo($firstName, $lastName, $lastlogin, $id)
 	{
-		$retValue = '{"msg":"' .$msg. '","error":""}';
+		$retValue = '{"id":' .$id. ',"firstName":"' .$firstName. '","lastName":"' .$lastName. '", "lastLogin":"' .$lastlogin. '","error":""}';
 		sendResultInfoAsJson($retValue);
 	}
 ?>
