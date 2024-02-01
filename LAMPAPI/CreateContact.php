@@ -19,7 +19,7 @@
 
     # Writes the sql statement to insert the contact into the database
     $stmt = $conn->prepare("INSERT into Contacts (FirstName, LastName, Phone, Email, Address, Age, Birthday, Emoji, UserID) VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssisbi", $inData["firstName"], $inData["lastName"], $inData["phone"], $inData["email"], $inData["address"], $inData["age"], $inData["birthday"], $inData["emoji"], $inData["userId"]);
+    $stmt->bind_param("sssssissi", $inData["firstName"], $inData["lastName"], $inData["phone"], $inData["email"], $inData["address"], $inData["age"], $inData["birthday"], $inData["emoji"], $inData["userId"]);
     
     $stmt->execute();
     $stmt->store_result();
