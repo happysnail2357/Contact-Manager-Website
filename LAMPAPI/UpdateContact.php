@@ -2,19 +2,11 @@
     # Gets the input
     $inData = getRequestInfo();
 
-    # Query Parameter
-    $id = $inData["id"];
-
-    # Data to be entered into the table
-    $firstName = NULL;
-    $lastName = NULL;
-    $phone = NULL;
-    $email = NULL;
-    $address = NULL;
-    $age = 0;
-    $birthday = NULL;
-    $emoji = NULL;
-    $userId = $inData["userId"];
+    if($inData["contactId"] == NULL)
+	{
+		returnWithError("Missing required field.");
+		return;
+	}
 
     # Attempts to connect to the database
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
@@ -28,10 +20,9 @@
 
     # Checks to see if the id exists
     $stmt = $conn->prepare("SELECT * FROM Contacts WHERE ID=?");
-    $stmt->bind_param("s", $id);
+    $stmt->bind_param("s", $inData["contactId"]);
 
     $stmt->execute();
-
     $result = $stmt->get_result();
     
     if($result->num_rows == 0)
@@ -43,55 +34,24 @@
     # Gets the updated fields
     $row = $result->fetch_assoc();
 
-    if(array_key_exists("firstName", $inData))
-        $firstName = $inData["firstName"];
-    else
-        $firstName = $row["FirstName"];
-
-    if(array_key_exists("lastName", $inData))
-        $lastName = $inData["lastName"];
-    else
-        $lastName = $row["LastName"];
-
-    if(array_key_exists("phone", $inData))
-        $phone = $inData["phone"];
-    else
-        $phone = $row["Phone"];
-    
-    if(array_key_exists("email", $inData))
-        $email = $inData["email"];
-    else
-        $email = $row["Email"];
-
-    if(array_key_exists("address", $inData))
-        $address = $inData["address"];
-    else
-        $address = $row["Address"];
-
-    if(array_key_exists("age", $inData))
-        $age = $inData["age"];
-    else
-        $age = $row["Age"];
-
-    if(array_key_exists("birthday", $inData))
-        $birthday = $inData["birthday"];
-    else
-        $birthday = $row["Birthday"];
-
-    if(array_key_exists("emoji", $inData))
-        $emoji = $inData["emoji"];
-    else
-        $emoji = $row["Emoji"];
+    $firstName = $inData["firstName"] != NULL ? $inData["firstName"] : $row["FirstName"];
+    $lastName = $inData["lastName"] != NULL ? $inData["lastName"] : $row["LastName"];
+    $phone = $inData["phone"] != NULL ? $inData["phone"] : $row["Phone"];
+    $email = $inData["email"] != NULL ? $inData["email"] : $row["Email"];
+    $address = $inData["address"] != NULL ? $inData["address"] : $row["Address"];
+    $age = $inData["age"] != NULL ? $inData["age"] : $row["Age"];
+    $birthday = $inData["birthday"] != NULL ? $inData["birthday"] : $row["Birthday"];
+    $emoji = $inData["emoji"] != NULL ? $inData["emoji"] : $row["Emoji"];
     
     # Updates the contact with the updated fields
     $stmt = $conn->prepare("UPDATE Contacts SET FirstName=?, LastName=?, Phone=?, Email=?, Address=?, Age=?, Birthday=?, Emoji=? WHERE ID=?");
-    $stmt->bind_param("sssssissi", $firstName, $lastName, $phone, $email, $address, $age, $birthday, $emoji, $id);
+    $stmt->bind_param("sssssissi", $firstName, $lastName, $phone, $email, $address, $age, $birthday, $emoji, $inData["contactId"]);
 
     $stmt->execute();
     $stmt->store_result();
         
     if($stmt->affected_rows > 0)
-        returnWithInfo("The contact was updated!.");
+        returnWithInfo("The contact was updated!");
     else
         returnWithError("The contact could not be updated.");
 

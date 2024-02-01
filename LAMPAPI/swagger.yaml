@@ -1,0 +1,316 @@
+swagger: '2.0'
+info:
+  description: This is the API documentation for the COP 4331C Small Project, Contact Manager
+  version: 1.0.0
+  title: Group 11 Contact Manager
+  contact:
+    email: ry179949@ucf.edu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+paths:
+  /Register.php:
+    post:
+      tags:
+      - User
+      summary: Generates a unique id for the user and stores the user's information into the database.
+      operationId: register
+      description: Generates a unique id for the user and stores the user's information into the database.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: registerItem
+        description: Register
+        schema:
+          $ref: '#/definitions/Register'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /Login.php:
+    post:
+      tags:
+      - User
+      summary: Gets the user's id from the database if the login and password are a match.
+      operationId: login
+      description: Gets the user's id from the database if the login and password are a match.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: loginItem
+        description: Login
+        schema:
+          $ref: '#/definitions/Login'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /CreateContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Adds a new contact to the database and fills it with the information passed in, otherwise leaves the fields null.
+      operationId: createContact
+      description: Adds a new contact to the database and fills it with the information passed in, otherwise leaves the fields null.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: createContactItem
+        description: Create Contact
+        schema:
+          $ref: '#/definitions/CreateContact'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /GetContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Retreives the desired contact from the table.
+      operationId: getContact
+      description: Retreives the desired contact from the table.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: getContact
+        description: Get Contact
+        schema:
+          $ref: '#/definitions/GetContact'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /UpdateContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Updates the fields of a specified contact.
+      operationId: updateContact
+      description: Updates the fields of a specified contact.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: updateContactItem
+        description: Update Contact
+        schema:
+          $ref: '#/definitions/UpdateContact'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /DeleteContact.php:
+    post:
+      tags:
+      - Contacts
+      summary: Deletes a contact from the database.
+      operationId: deleteContact
+      description: Deletes a contact from the database.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: deleteContactItem
+        description: Delete Contact
+        schema:
+          $ref: '#/definitions/DeleteContact'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /Search.php:
+    post:
+      tags:
+      - Contacts
+      summary: Returns a list of contacts where query is a substring of a contact's full name. 
+      operationId: search
+      description: Returns a list of contacts where query is a substring of a contact's full name. 
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: searchItem
+        description: Search
+        schema:
+          $ref: '#/definitions/Search'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error       
+          
+definitions:
+  Register:
+    type: object
+    required:
+    - login
+    - password
+    - firstName
+    - lastName
+    properties:
+      login:
+        type: string
+        example: "batman"
+      password:
+        type: string
+        example: "secret"
+      firstName:
+        type: string
+        example: "Bruce"
+      lastName:
+        type: string
+        example: "Wayne"
+  Login:
+    type: object
+    required:
+    - login
+    - password
+    properties:
+      login:
+        type: string
+        example: "batman"
+      password:
+        type: string
+        example: "secret"
+  CreateContact:
+    type: object
+    required:
+    - firstName
+    - lastName
+    - userId
+    properties:
+      firstName:
+        type: string
+        example: "Barry"
+      lastName:
+        type: string
+        example: "Allen"
+      phone:
+        type: string
+        example: "123-456-7890"
+      email:
+        type: string
+        example: "ballen@ccpd.com"
+      address:
+        type: string
+        example: "956 Showcase Drive Apt #4"
+      age:
+        type: integer
+        example: 32
+      birthday:
+        type: string
+        example: "09-30-1992"
+      emoji:
+        type: string
+        example: "⚡"
+      userId:
+        type: integer
+        example: 1
+  GetContact:
+    type: object
+    required:
+    - userId
+    - contactId
+    properties:
+      userId:
+        type: integer
+        example: 1
+      contactId:
+        type: integer
+        example: 1
+  UpdateContact:
+    type: object
+    required:
+    - contactId
+    properties:
+      id:
+        type: integer
+        example: 1
+      firstName:
+        type: string
+        example: "Barry"
+      lastName:
+        type: string
+        example: "Allen"
+      phone:
+        type: string
+        example: "123-456-7890"
+      email:
+        type: string
+        example: "ballen@ccpd.com"
+      address:
+        type: string
+        example: "956 Showcase Drive Apt #4"
+      age:
+        type: integer
+        example: 32
+      birthday:
+        type: string
+        example: "09-30-1992"
+      emoji:
+        type: string
+        example: "⚡"
+  DeleteContact:
+    type: object
+    required:
+    - contactId
+    properties:
+      id:
+        type: integer
+        example: 1
+  Search:
+    type: object
+    required:
+    - userId
+    - query
+    properties:
+      userId:
+        type: integer
+        example: 1
+      query:
+        type: string
+        example: "Joe S"
+  
+host: 159.203.170.88
+basePath: /LAMPAPI
+schemes:
+- http

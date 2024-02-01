@@ -3,24 +3,10 @@
 	$inData = getRequestInfo();
 
 	# Checks to see if the any of the required fields are null
-	if($inData['login'] == NULL)
+
+	if($inData['login'] == NULL || $inData['password'] == NULL || $inData['firstName'] == NULL || $inData['lastName'] == NULL)
 	{
-		returnWithError('Login cannot be null.');
-		return;
-	}
-	else if($inData['password'] == NULL)
-	{
-		returnWithError('Password cannot be null.');
-		return;
-	}
-	else if($inData['firstName'] == NULL)
-	{
-		returnWithError('firstName cannot be null.');
-		return;
-	}
-	else if($inData['lastName'] == NULL)
-	{
-		returnWithError('lastName cannot be null.');
+		returnWithError("Missing required field(s).");
 		return;
 	}
 
