@@ -5,47 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
-    
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+
     <script defer src="js/landing-page.js"></script>
     <title>Document</title>
 </head> 
 <body>
 <!-- Navigation Bar -->
-    <nav class="navbar navbar-dark navbar-expand-sm bg-dark 
+    <nav class="navbar navbar-dark navbar-expand-lg-sm-md bg-dark 
                 sticky-top d-flex justify-content-around" role="navigation">
 
         <div class="container-fluid">
             <a class="navbar-brand h1">Title</a>
-            <!-- <input class="form-control mx-auto w-50" 
-                type="search" placeholder="Search"  > -->
+   
             <div class="input-group w-50 ">
                 <input type="text" class="form-control" placeholder="Search" aria-label="Search" 
                     aria-describedby="button-addon1" id="search-input">
                 <button class="btn btn-outline-secondary w-10" type="button" id="search-btn">&#x2315</button>
             </div>
-            <div class="container-one d-flex">
-                <button type="button" class="btn btn-secondary rounded-circle m-2">
+
+            <div class="container-one d-flex justify-content-around">
+                
+                <button type="button" class="btn btn-secondary rounded-circle mx-3" data-bs-toggle="modal" data-bs-target="#userinfo" id="create-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="30" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                         <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"></path>
                     </svg>
                 </button>
-                <button type="button" class="btn btn-secondary rounded-circle m-2">
+                <button type="button" class="btn btn-secondary rounded-circle mx-3" id = "delete-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                         <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/>
                         <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/>
                       </svg>
                 </button>
+                <div class="form-check form-switch  mt-3 mx-3">
+                    <input class="form-check-input" type="checkbox" role="switch" id="show_all" >
+                  </div>
             </div>
-            <ul class="navbar-nav">
 
-                <li class="nav-item">
-                    <a href="#" class="nav-link active">Log Out</a>
-                </li>
-                <li class="nav-item">
-                    <a href="#" class="nav-link active">About</a>
-                </li>
-
-            </ul>
+            <button class="navbar-toggler"data-bs-toggle="collapse" data-bs-target="#nav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse " id = "nav">
+                <ul class="navbar-nav d-flex " >
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#" class="nav-link active">About</a>
+                    </li>
+                </ul>
+            </div>
         </div>
     </nav>
 
@@ -53,7 +62,7 @@
 <!-- Table -->
 
     <div class="container-two m-5">
-        <table class="table table-bordered d-none"  id="main-table">
+        <table class="table table-bordered table-hover"  id="main-table" >
             <thead>
                 <tr>
                     <th scope="col"></th>
@@ -69,11 +78,93 @@
                 </tr>
             </thead>
             <tbody id = "t-body" >
+                <!-- <tr id=trow-1>
 
+                    <th scope="row"  > 
+                        <div class="div d-flex justify-content-center mt-4">
+                            <input class="form-check-input" type="checkbox" value="" id="cbox-1" style="height: 5px;width: 5px;">
+                        </div>
+                 
+                    </th>
+                <td>
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><defs><style>.b{fill:#864e20}.c{fill:#e7c930}</style></defs><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path class="b" d="M12 5.417a2.934 2.934 0 1 0 2.934 2.934A2.935 2.935 0 0 0 12 5.417z"/><path class="c" d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z"/><path class="b" d="M16.083 13.841A5.487 5.487 0 0 0 12 12.091a5.487 5.487 0 0 0-4.083 1.75c-.959 1.292-.147 2.667.885 2.583s2.781-.285 3.2-.285 2.167.2 3.2.285 1.84-1.291.881-2.583z"/><path d="M13.75 14.551c-1.344-.3-1.75.109-1.75.109s-.406-.406-1.75-.109a2.463 2.463 0 0 0-1.65 1.87 1.1 1.1 0 0 0 .207 0c1.031-.083 2.781-.285 3.2-.285s2.167.2 3.2.285a1.1 1.1 0 0 0 .207 0 2.463 2.463 0 0 0-1.664-1.87z" style="fill:#f06880"/><path class="c" d="M13.965 17.2A9.842 9.842 0 0 0 12 16.9a9.842 9.842 0 0 0-1.965.3c-.294.061-.3.3 0 .261S12 17.326 12 17.326s1.663.09 1.965.13.294-.2 0-.256z"/></svg>
+                </td>
+                        <td class="text-center"><div class="first-name">#</div><div class="last-name">#</div></td>
+                            <td class="text-center">#</td>
+                            <td class="text-center">#</td>
+                            <td class="text-center">#</td>
+                            <td class="text-center">#</td>
+                            <td class="text-center">#</td>
+                            <td clas= "text-center">
+                                <button type="button" class="btn btn-primary rounded m-2" data-bs-toggle="modal" data-bs-target="#userinfo">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                        <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
+                                        <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"></path>
+                                    </svg>
+                                </button>
+
+                            </td>
+                    </tr> --> 
             
             </tbody>
         </table>
     </div>
     
+
+    <!-- Modal Design -->
+    <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id = "userinfo">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header d-flex justify-content-center">
+                <div style="width:60px; height:60px;cursor: pointer;" id ="emoji-profile">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" ><defs><style>.b{fill:#864e20}.c{fill:#e7c930}</style></defs><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path class="b" d="M12 5.417a2.934 2.934 0 1 0 2.934 2.934A2.935 2.935 0 0 0 12 5.417z"/><path class="c" d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z"/><path class="b" d="M16.083 13.841A5.487 5.487 0 0 0 12 12.091a5.487 5.487 0 0 0-4.083 1.75c-.959 1.292-.147 2.667.885 2.583s2.781-.285 3.2-.285 2.167.2 3.2.285 1.84-1.291.881-2.583z"/><path d="M13.75 14.551c-1.344-.3-1.75.109-1.75.109s-.406-.406-1.75-.109a2.463 2.463 0 0 0-1.65 1.87 1.1 1.1 0 0 0 .207 0c1.031-.083 2.781-.285 3.2-.285s2.167.2 3.2.285a1.1 1.1 0 0 0 .207 0 2.463 2.463 0 0 0-1.664-1.87z" style="fill:#f06880"/><path class="c" d="M13.965 17.2A9.842 9.842 0 0 0 12 16.9a9.842 9.842 0 0 0-1.965.3c-.294.061-.3.3 0 .261S12 17.326 12 17.326s1.663.09 1.965.13.294-.2 0-.256z"/></svg>
+            </div>
+                <button class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+                <div class="modal-body d-grid gap-3">
+                    <div class="row gx-2">
+                        <div class="form-floating col">
+                            <input type="text" class="text form-control" id="first">
+                            <label class="form-label">Name</label>
+                        </div>
+                        <div class="form-floating col">
+                            <input type="text" class="text form-control" id="last">
+                            <label class="form-label">Last</label>
+                        </div>
+                    </div>
+                    
+                        <div class="form-floating">
+                            <input type="text" class="text form-control" id="email">
+                            <label class="form-label">Email</label>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="text" class="text form-control" id="address">
+                            <label class="form-label">Address</label>
+                        </div>
+                        <div class="form-floating">
+                            <input type="text" class="text form-control" id="phone">
+                            <label class="form-label">Phone Number</label>
+                        </div>
+                        <div class="row g-2">
+                            <div class="form-floating col">
+                                <input type="text" class="text form-control" id="birth">
+                                <label class="form-label"> Birthday</label>
+                            </div>
+                            <div class="form-floating col">
+                                <input type="text" class="text form-control" id="age">
+                                <label class="form-label "> Age</label>
+                            </div>
+                        </div>
+                    <!-- </div> -->
+
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" data-bs-dismiss="modal" id = "save_btn">Save</button>
+                </div>
+            </div>
+        </div>
+      </div>
+      
 </body>
 </html>
