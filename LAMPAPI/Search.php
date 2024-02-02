@@ -2,10 +2,10 @@
     # Gets the input
     $inData = getRequestInfo();
 
-    f($inData["userId"] == NULL || $inData["query"] == NULL)
+    if($inData["userId"] == NULL || $inData["query"] == NULL)
     {
-		returnWithError("Missing required field(s).");
-		return;
+		return returnWithError("Missing required field(s).")
+		
 	}
 
     # Attempts to connect to the database
