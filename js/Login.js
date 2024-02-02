@@ -20,10 +20,16 @@ function doLogin(){
 
   postData(url, temp).then((data) => 
 	{
-		if(data.id !=0){
+		
+		if(data.error !='No Records Found'){
 			jsonObject=data;
 			saveCookie();
+			console.log(jsonObject);
 			window.location.href = "landing-page.html";
+		}
+		else{
+			console.log(data.error);
+			console.log(temp);
 		}
   
 	});

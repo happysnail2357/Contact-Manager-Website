@@ -1,0 +1,75 @@
+
+:root {
+    --first: #F9C74F;
+    --second: #FFE39E;
+    --third: #488FAE;
+    --fourth: #CBEAF7;
+    --sixth: #055A7F;
+    --seventh: #70B2CF;
+    --hover: #AD6340;
+    --text:white;
+}
+  
+
+
+#create-btn{
+    background-color: var(--third);
+}
+
+#delete-btn{
+    background-color: var(--third);
+}
+
+
+#search-btn{
+    /* background-color: var(--third); */
+    border-color:var(--third);
+    color:white;
+}
+
+#search-btn:hover{
+    background-color: var(--third);
+}
+
+nav.navbar.navbar-expand-lg-sm-md a{
+    color:var(--text);
+}
+nav.navbar.navbar-expand-lg-sm-md{
+    background-color: var(--sixth);
+}
+body{
+    background-color: var(--seventh) ;
+}
+ 
+
+
+.table-header tr th{
+    background-color: var(--seventh) ;
+    border-color: var(--seventh);
+    color:white;
+}
+
+#main-table td{
+    background-color: var(--seventh);
+    border-color:  var(--sixth) ;
+    font-weight:500;
+  
+}
+.edit-btn{
+    background-color:var(--hover) ;
+    border-color:var(--hover) ;
+}
+.edit-btn:hover{
+    background-color:var(--first) ;
+    border-color:var(--first) ;
+
+}
+
+
+
+
+svg.emoji{
+   width:100px;
+   height:75px;;
+
+}
