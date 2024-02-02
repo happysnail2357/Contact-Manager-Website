@@ -2,6 +2,12 @@
     # Gets the input
     $inData = getRequestInfo();
 
+    f($inData["userId"] == NULL || $inData["query"] == NULL)
+    {
+		returnWithError("Missing required field(s).");
+		return;
+	}
+
     # Attempts to connect to the database
 	$conn = new mysqli("localhost", "TheBeast", "WeLoveCOP4331", "COP4331");
 
