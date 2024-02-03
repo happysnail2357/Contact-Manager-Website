@@ -4,8 +4,8 @@
 
     if($inData["userId"] == NULL || $inData["query"] == NULL)
     {
-		return returnWithError("Missing required field(s).")
-		
+		returnWithError("Missing required field(s).");
+		return;
 	}
 
     # Attempts to connect to the database

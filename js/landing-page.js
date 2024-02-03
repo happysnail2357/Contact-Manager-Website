@@ -47,7 +47,6 @@ $("#search-btn").click(function(){
     temp = {"userId" : user_id, "query": input};
     console.log(temp);
     let contacts_array = "";
-    
 
     postData(url,temp).then((data)=>
     {   
@@ -63,6 +62,8 @@ $("#search-btn").click(function(){
     }).catch((e)=>{
         console.log(e);
     });
+
+
 });
 
 
@@ -70,27 +71,14 @@ $("#search-btn").click(function(){
 
 
 $("#delete-btn").click(function(event){
-    event.preventDefault();
+    
     let searchIDs = $("input:checkbox:checked").map(function(){
         return $(this).val();
     }).toArray();
-    url = "https://cardboardmc.com/LAMPAPI/DeleteContact.php";
-    let temp; 
-    for(let i of searchIDs){
-        $(`#t-row${i}`).remove();
+        console.log(searchIDs);
+    url ="https://cardboardmc.com/LAMPAPI/DeleteContact.php";
 
-        temp = {"contactId": i};
-        console.log(temp);
-        postData(url,temp).then((data)=>
-        {   
-            jsonObject = data;
-            
-            
-            console.log(jsonObject);
-
-            
-        });
-    }
+    delete_list(url, searchIDs).catch(e=>console.log(e));
 
 
 
@@ -116,109 +104,135 @@ $('#userinfo').on('show.bs.modal', function (event)
             
         });
 
+        $("#t-body").on("click", "button", function(event){
+            console.log($(this).attr('id'));
+        })
 
+        
         let button = $(event.relatedTarget); 
         let contact_user_id = button.attr("id");
 
         //The edit button is clicked
-        if(button.attr('id') != "create-btn"){
+        // if(button.attr('id') != "create-btn"){
 
         
             
-            emoji_name = $(`#t-row${contact_user_id}`).find("p").attr("value");
+        //     emoji_name = $(`#t-row${contact_user_id}`).find("p").attr("value");
             
             
-            $("#emoji-profile").html(emojis[emoji_name]);
+        //     $("#emoji-profile").html(emojis[emoji_name]);
             
-            $("#first").val($(`#t-row${contact_user_id}`).find(".r-first").text());
-            $("#last").val($(`#t-row${contact_user_id}`).find(".r-last").text());
-            $("#phone").val($(`#t-row${contact_user_id}`).find(".r-phone").text());
-            $("#email").val($(`#t-row${contact_user_id}`).find(".r-email").text());
-            $("#address").val($(`#t-row${contact_user_id}`).find(".r-address").text());
-            $("#age").val($(`#t-row${contact_user_id}`).find(".r-age").text());
-            $('#birth').val($(`#t-row${contact_user_id}`).find(".r-birth").text());
+        //     $("#first").val($(`#t-row${contact_user_id}`).find(".r-first").text());
+        //     $("#last").val($(`#t-row${contact_user_id}`).find(".r-last").text());
+        //     $("#phone").val($(`#t-row${contact_user_id}`).find(".r-phone").text());
+        //     $("#email").val($(`#t-row${contact_user_id}`).find(".r-email").text());
+        //     $("#address").val($(`#t-row${contact_user_id}`).find(".r-address").text());
+        //     $("#age").val($(`#t-row${contact_user_id}`).find(".r-age").text());
+        //     $('#birth').val($(`#t-row${contact_user_id}`).find(".r-birth").text());
  
             
-            console.log("button "+contact_user_id);
+        //     console.log("button "+contact_user_id);
+        // }    
+
+        if(button.attr("id")=='create-btn'){
+            $("#emoji-profile").html(emojis["BigFrown"]);
+
         }
 
+        $("form").on("submit", function(event){
 
-        $('#save-btn').click(function(event)
-        {
-
-            let get_contact_info = {
-                "contactId": contact_user_id,
-                "firstName": $("#first").val(),
-                "lastName": $("#last").val(),
-                "phone":  $("#phone").val(),
-                "email": $("#email").val(),
-                "address": $("#address").val(),
-                "age": $("#age").val(),
-                "birthday": $('#birth').val(),
-                "emoji": emoji_name,
-                "userId": user_id
-            }
-            
-            //creates contact user
-            if(button.attr('id') == "create-btn"){
-               
-                url = "https://cardboardmc.com/LAMPAPI/CreateContact.php";     
-                
-                postData(url,get_contact_info).then((data)=>{   
-                    console.log(data);
-
-                    let get_contact_info = {
-                       
-                        "FirstName": $("#first").val(),
-                        "LastName": $("#last").val(),
-                        "Phone":  $("#phone").val(),
-                        "Email": $("#email").val(),
-                        "Address": $("#address").val(),
-                        "Age": $("#age").val(),
-                        "Birthday": $('#birth').val(),
-                        "Emoji": emoji_name,
-                        "us": user_id
-                    }
-                    fill_in_table(get_contact_info,table);
-
-                }).catch((e)=>{
-                    
-                    console.log(e);
-                });
-            
-            //edits contact user
-            }else if(button.attr('id') == contact_user_id){
-                url = "https://cardboardmc.com/LAMPAPI/UpdateContact.php";     
-               
-                
-                postData(url,get_contact_info).then((data)=>{   
-                    //changes the text inside the table
-                    $(`#t-row${contact_user_id}`).find("p").html(emojis[emoji_name]);
-                    console.log(contact_user_id + " "+emoji_name)
-                    $(`#t-row${contact_user_id}`).find(".r-first").text(get_contact_info.firstName);
-                    $(`#t-row${contact_user_id}`).find(".r-last").text(get_contact_info.lastName);
-                    $(`#t-row${contact_user_id}`).find(".r-phone").text(get_contact_info.phone);
-                    $(`#t-row${contact_user_id}`).find(".r-email").text(get_contact_info.email);
-                    $(`#t-row${contact_user_id}`).find(".r-address").text(get_contact_info.address);
-                    $(`#t-row${contact_user_id}`).find(".r-age").text(get_contact_info.age);
-                    $(`#t-row${contact_user_id}`).find(".r-birth").text(get_contact_info.birthday);
-                    console.log("save "+contact_user_id);
-
-
-                }).catch((e)=>{
+            if($("#first").val() != 0 && $("#last").val()!=0 ){
+                let get_contact_info = {
+                    "contactId": contact_user_id,
+                    "firstName": $("#first").val(),
+                    "lastName": $("#last").val(),
+                    "phone":  $("#phone").val(),
+                    "email": $("#email").val(),
+                    "address": $("#address").val(),
+                    "age": $("#age").val(),
+                    "birthday": $('#birth').val(),
+                    "emoji": emoji_name,
+                    "userId": user_id
+                }
+                console.log(get_contact_info);
+                //creates contact user
+                if(button.attr('id') == "create-btn"){
                    
-                    console.log("didnt work "+contact_user_id);
+                    url = "https://cardboardmc.com/LAMPAPI/CreateContact.php";     
+                    
+                    postData(url,get_contact_info).then((data)=>{   
+                        console.log(data);
+    
+                        let get_contact_info = {
+                           
+                            "FirstName": $("#first").val(),
+                            "LastName": $("#last").val(),
+                            "Phone":  $("#phone").val(),
+                            "Email": $("#email").val(),
+                            "Address": $("#address").val(),
+                            "Age": $("#age").val(),
+                            "Birthday": $('#birth').val(),
+                            "Emoji": emoji_name,
+                            "userId": user_id
 
-                });
-
+                        }
+                        fill_in_table(get_contact_info,table);
+                        
+                        
+    
+                    }).then(()=>
+                    {
+                        $("#userinfo").modal('hide');
+                    }).catch((e)=>
+                    {
+                        console.log(e);
+                    });
+                
+                }
+               
+            }else{
+               $( "span" ).text( "Missing required field(s)." ).show().fadeOut( 8000 );
             }
-
-
+            event.preventDefault();
+            
         });
+//         $('#save-btn').click(function(event)
+//         {
+
+// //edits contact user
+//         });//else if(button.attr('id') == contact_user_id){
+        //         url = "https://cardboardmc.com/LAMPAPI/UpdateContact.php";     
+               
+                
+        //         postData(url,get_contact_info).then((data)=>{   
+        //             //changes the text inside the table
+        //             $(`#t-row${contact_user_id}`).find("p").html(emojis[emoji_name]);
+        //             console.log(contact_user_id + " "+emoji_name)
+        //             $(`#t-row${contact_user_id}`).find(".r-first").text(get_contact_info.firstName);
+        //             $(`#t-row${contact_user_id}`).find(".r-last").text(get_contact_info.lastName);
+        //             $(`#t-row${contact_user_id}`).find(".r-phone").text(get_contact_info.phone);
+        //             $(`#t-row${contact_user_id}`).find(".r-email").text(get_contact_info.email);
+        //             $(`#t-row${contact_user_id}`).find(".r-address").text(get_contact_info.address);
+        //             $(`#t-row${contact_user_id}`).find(".r-age").text(get_contact_info.age);
+        //             $(`#t-row${contact_user_id}`).find(".r-birth").text(get_contact_info.birthday);
+        //             console.log("save "+contact_user_id);
+
+
+        //         }).catch((e)=>{
+                   
+        //             console.log("didnt work "+contact_user_id);
+
+        //         });
+
+        //     }
+
+
+        // });
     });
     $('#userinfo').on('hidden.bs.modal', function () {
         
         $(this).find('form').trigger('reset');
+        
     });
 
     //prevents non-integer input
@@ -315,4 +329,20 @@ function clear_screen(){
 
 }
 
+
+
+async function delete_list(url, searchIDs) {
+    
+    for(let id of searchIDs) {
+
+        let temp = {"contactId": id};
+
+        
+        postData(url,temp).then((data)=>
+        {
+            console.log(data);
+        });
+        
+    }
+}
 
