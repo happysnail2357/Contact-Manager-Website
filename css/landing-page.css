@@ -16,7 +16,7 @@
     background-color: var(--third);
 }
 
-#delete-btn{
+#trash-icon{
     background-color: var(--third);
 }
 
@@ -73,3 +73,12 @@ svg.emoji{
    height:75px;;
 
 }
+
+.modal-content#modal-background{
+    /* background-color: #710000; */
+  }
+
+  .modal-content#modal-background{
+    color: #710000;
+
+  }

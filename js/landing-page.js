@@ -70,20 +70,43 @@ $("#search-btn").click(function(){
 
 
 
-$("#delete-btn").click(function(event){
+$("#trash-icon").click(function(event){
+
+    event.preventDefault();
     
     let searchIDs = $("input:checkbox:checked").map(function(){
         return $(this).val();
     }).toArray();
-        console.log(searchIDs);
-    url ="https://cardboardmc.com/LAMPAPI/DeleteContact.php";
 
-    delete_list(url, searchIDs).catch(e=>console.log(e));
+    if(searchIDs!=0)
+    {
+        $("#delete-btn").click(function()
+        {
+            searchIDs = $("input:checkbox:checked").map(function(){
+                return $(this).val();
+            }).toArray();
+            url ="https://cardboardmc.com/LAMPAPI/DeleteContact.php";
+    
+                
+            delete_list(url, searchIDs).then(()=>$("#warning-modal").modal("hide")).catch(data=>
+            {
+                console.log(data);
+                
+            });
+        });
+        
+        
 
+    }else{
+        $("#warning-modal").modal("hide");
 
+    }
 
     
 });
+
+
+
 
 
 $('#userinfo').on('show.bs.modal', function (event) 
@@ -332,17 +355,40 @@ function clear_screen(){
 
 
 async function delete_list(url, searchIDs) {
-    
-    for(let id of searchIDs) {
 
-        let temp = {"contactId": id};
 
-        
-        postData(url,temp).then((data)=>
-        {
-            console.log(data);
-        });
-        
+    const result = []
+    for (let i = 0; i < searchIDs.length; i++) {
+
+        let temp = {"contactId": searchIDs[i]};
+      
+        const response = await fetch(url, 
+		{
+			method: "POST", 
+			mode: "cors", 
+			cache: "no-cache", 
+			credentials: "omit", 
+			headers:
+			{
+				"Content-Type": "application/json",
+				
+			},
+			redirect: "follow", 
+			referrerPolicy: "no-referrer", 
+			body: JSON.stringify(temp), 
+		});
+        const data = await response.json()
+
+        if(data.msg ==="The contact was deleted from the database."){
+           
+            setTimeout($(`#t-row${searchIDs[i]}`).remove(), 2*1000);
+        }
+        result.push(data);
+
+
     }
+
+    return result;
+
 }
 
