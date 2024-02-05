@@ -42,23 +42,9 @@
 	$stmt->store_result();
 	
 	if($stmt->affected_rows <= 0)
-	{
-		returnWithError("The user was not able to be added to the database.");
-		$stmt->close();
-		$conn->close();
-		return;
-	}
-
-	# Writes the sql statement to select the user
-	$stmt = $conn->prepare("SELECT ID,firstName,lastName,dateLastLoggedIn FROM Users WHERE Login=? AND Password =?");
-	$stmt->bind_param("ss", $inData["login"], $inData["password"]);
-	$stmt->execute();
-	$result = $stmt->get_result();
-
-	if($row = $result->fetch_assoc())
-		returnWithInfo($row['firstName'], $row['lastName'], $row['dateLastLoggedIn'], $row['ID']);
+		returnWithError("The user could not be created.");
 	else
-		returnWithError("Could not get the user's id.");
+		returnWithInfo($inData["login"], $inData["password"], $conn->insert_id);
 
 	$stmt->close();
 	$conn->close();
@@ -80,9 +66,9 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo($firstName, $lastName, $lastlogin, $id)
+	function returnWithInfo($firstName, $lastName, $id)
 	{
-		$retValue = '{"id":' .$id. ',"firstName":"' .$firstName. '","lastName":"' .$lastName. '", "lastLogin":"' .$lastlogin. '","error":""}';
+		$retValue = '{"id":' .$id. ',"firstName":"' .$firstName. '","lastName":"' .$lastName. '", "error":""}';
 		sendResultInfoAsJson($retValue);
 	}
 ?>

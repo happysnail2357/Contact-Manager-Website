@@ -24,10 +24,10 @@
     $stmt->execute();
     $stmt->store_result();
     
-    if($stmt->affected_rows > 0)
-        returnWithInfo("The contact was added to the database.");
-    else
-        returnWithError("The contact was not able to be added to the database.");
+    if($stmt->affected_rows <= 0)
+		returnWithError("The contact could not be created.");
+	else
+		returnWithInfo($conn->insert_id, $inData["firstName"], $inData["lastName"], $inData["phone"], $inData["email"], $inData["address"], $inData["age"], $inData["birthday"], $inData["emoji"], $inData["userId"]);
 
     $stmt->close();
     $conn->close();
@@ -49,9 +49,10 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo($msg)
+	function returnWithInfo($id, $firstName, $lastName, $phone, $email, $address, $age, $birthday, $emoji, $userId)
 	{
-		$retValue = '{"msg":"' .$msg. '","error":""}';
+		
+		$retValue = '{"id":' .$id. ', "firstName":"' .$firstName. '", "lastName":"' .$lastName. '", "phone":"' .$phone. '", "email":"' .$email. '", "address":"' .$address. '", "age":' .$age. ', "birthday":"' .$birthday. '", "emoji":"' .$emoji. '", "userId":' .$userId. '}';
 		sendResultInfoAsJson($retValue);
 	}
 ?>
