@@ -49,10 +49,10 @@
 		sendResultInfoAsJson( $retValue );
 	}
 	
-	function returnWithInfo($id, $firstName, $lastName, $phone, $email, $address, $age, $birthday, $emoji, $userId)
+	function returnWithInfo($id)
 	{
 		
-		$retValue = '{"id":' .$id. ', "firstName":"' .$firstName. '", "lastName":"' .$lastName. '", "phone":"' .$phone. '", "email":"' .$email. '", "address":"' .$address. '", "age":' .$age. ', "birthday":"' .$birthday. '", "emoji":"' .$emoji. '", "userId":' .$userId. '}';
+		$retValue = '{"id":' .$id. '}';
 		sendResultInfoAsJson($retValue);
 	}
 ?>

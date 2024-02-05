@@ -28,8 +28,8 @@ function doLogin(){
 		if(data.error != null){
 			jsonObject=data;
 			saveCookie();
-			console.log(jsonObject);
-			// window.location.href = "landing-page.html";
+			
+			window.location.href = "landing-page.html";
 		}
 	});
 }
