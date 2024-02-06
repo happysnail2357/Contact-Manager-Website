@@ -130,13 +130,14 @@ $('#userinfo').on('show.bs.modal', function (event)
         
             
             emoji_name = $(`#t-row${contact_user_id}`).find("p").attr("value");
-            
-            
+            $("#phone").text()
+
+
             $("#emoji-profile").html(emojis[emoji_name]);
             
             $("#first").val($(`#t-row${contact_user_id}`).find(".r-first").text());
             $("#last").val($(`#t-row${contact_user_id}`).find(".r-last").text());
-            $("#phone").val($(`#t-row${contact_user_id}`).find(".r-phone").text());
+            $("#phone").val($(`#t-row${contact_user_id}`).find(".r-phone").text().replace(/[^0-9]/g, ""));
             $("#email").val($(`#t-row${contact_user_id}`).find(".r-email").text());
             $("#address").val($(`#t-row${contact_user_id}`).find(".r-address").text());
             $("#age").val($(`#t-row${contact_user_id}`).find(".r-age").text());
@@ -151,8 +152,14 @@ $('#userinfo').on('show.bs.modal', function (event)
         }
 
         $("form").off().on("submit", function(event){
+            if($("#first").val() == 0 || $("#last").val() ==0 )
+            {
+                
+                $( ".modal-footer span" ).text( "Missing required field(s)." ).show().fadeOut( 8000 );
+            }else if($("#phone").val()>0 && $("#phone").val()<10){
+                $( ".modal-footer span" ).text( "Invalid phone number." ).show().fadeOut( 8000 );
 
-            if($("#first").val() != 0 && $("#last").val()!=0 ){
+            }else{
                 let get_contact_info = {
                     "contactId": contact_user_id,
                     "firstName": $("#first").val(),
@@ -225,15 +232,10 @@ $('#userinfo').on('show.bs.modal', function (event)
 
                 }
                
-            }else{
-               $( "span" ).text( "Missing required field(s)." ).show().fadeOut( 8000 );
             }
             event.preventDefault();
             
         });
-//         $('#save-btn').click(function(event)
-//         {
-
 
 
 
@@ -277,11 +279,11 @@ function fill_in_table(jsonObject,table){
                     </td>
                     <td><p class="text-center" value = "${jsonObject.Emoji}">${emojis[jsonObject.Emoji]}</p></td>
                     <td class="text-center"><div class="r-first">${jsonObject.FirstName?jsonObject.FirstName:""}</div><div class="r-last">${jsonObject.LastName?jsonObject.LastName: ""}</div></td>
-                        <td class="text-center r-birth">${jsonObject.Birthday?jsonObject.Birthday:"#"}</td>
-                        <td class="text-center r-phone">${jsonObject.Phone?jsonObject.Phone:"#"}</td>
-                        <td class="text-center r-address">${jsonObject.Address?jsonObject.Address:"#"}</td>
-                        <td class="text-center r-email" >${jsonObject.Email?jsonObject.Email:"#"}</td>
-                        <td class="text-center r-age">${jsonObject.Age?jsonObject.Age:"#"}</td>
+                        <td class="text-center r-birth">${jsonObject.Birthday?jsonObject.Birthday:""}</td>
+                        <td class="text-center r-phone">${jsonObject.Phone?phoneNumberFormat(jsonObject.Phone):""}</td>
+                        <td class="text-center r-address">${jsonObject.Address?jsonObject.Address:""}</td>
+                        <td class="text-center r-email" >${jsonObject.Email?jsonObject.Email:""}</td>
+                        <td class="text-center r-age">${jsonObject.Age?jsonObject.Age:""}</td>
                         <td class= "text-center ">
                         <button type="button" class="btn btn-primary rounded edit-btn" data-bs-toggle="modal" data-bs-target="#userinfo" id = ${jsonObject.ID}> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                     <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"></path>
@@ -382,3 +384,10 @@ async function delete_list(url, searchIDs) {
 
 }
 
+function phoneNumberFormat(string){
+	if(string.length !=10){
+        
+		return "";
+	}
+	return `(${string.substring(0,3)}) - ${string.substring(3,6)} - ${string.substring(6,10)}`
+}

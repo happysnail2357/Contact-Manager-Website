@@ -6,19 +6,30 @@
     --fourth: #CBEAF7;
     --sixth: #055A7F;
     --seventh: #70B2CF;
+    --eigth:#03437D;
+    --ninth:#0879DF;
     --hover: #AD6340;
     --text:white;
-}
+    --btn-hover:#002C3D;
+
+    
+    --warning: #DB0000;
+    --warning2:#B20000;
+   
+}   
   
 
 
-#create-btn{
-    background-color: var(--third);
+#create-btn:hover, #trash-icon:hover{
+    background-color: var(--seventh);
+    border-color: var(--eighth);
 }
 
-#trash-icon{
-    background-color: var(--third);
+#trash-icon,#create-btn{
+    background-color: var(--sixth);
+    border-color: white;
 }
+
 
 
 #search-btn{
@@ -31,7 +42,7 @@
     background-color: var(--third);
 }
 
-nav.navbar.navbar-expand-lg-sm-md a{
+nav.navbar.navbar-expand-lg-sm-md a, .container p{
     color:var(--text);
 }
 nav.navbar.navbar-expand-lg-sm-md{
@@ -74,11 +85,38 @@ svg.emoji{
 
 }
 
-.modal-content#modal-background{
-    /* background-color: #710000; */
-  }
+.modal-content{
+    background-color: #F4F8FC;
+}
 
-  .modal-content#modal-background{
-    color: #710000;
 
-  }
+#save-btn{
+    background-color:var(--eigth);
+    border-color: var(--eigth);
+} 
+#save-btn:hover{
+    background-color:var(--ninth);
+    border-color: var(--ninth);
+} 
+
+
+#delete-btn{
+    background-color:var(--warning2);
+    border-color: var(--warning2);
+}
+
+#delete-btn:hover{
+    background-color:var(--warning);
+    border-color: var(--warning);
+}
+
+#cancel-warning-modal{
+    color:var(--warning2);
+    border-color:var(--warning2);
+}
+
+#cancel-warning-modal:hover{
+    background-color:var(--warning2);
+    border-color: var(--warning2);
+    color:white;
+}
