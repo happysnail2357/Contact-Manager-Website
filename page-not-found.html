@@ -3,17 +3,48 @@
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>404 Not found</title>
-	<link rel="stylesheet" href="css/style.css">
+	<title>404 Not found | All My Beaches</title>
+	<link rel="stylesheet" href="css/page.css">
+
+	<script src="js/fader.js"></script>
+
+	<style>
+		h {
+			color: white;
+			font-size: 50px;
+			font-family: 'Gowun Batang', serif;
+		}
+
+		p {
+			color: white;
+			font-size: 24px;
+			font-family: 'Gowun Batang', serif;
+		}
+
+		img {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			width: 30vw;
+			min-width: 200px;
+			max-width: 400px;
+		}
+	</style>
 
 </head>
 <body>
-	<div>
-		<h1 style="text-align:center;color:white;font-size:60px;font-family:fantasy;" >404: We coundn't find the page you requested</h1>
+
+	<header>
+		<a href="#" onclick="pageTransition('home.html', 'text-div')">All My Beaches</a>
+	</header>
+
+	<div id="text-div" class="centered-block fade-me-in" style="width: 90vw; text-align: center;">
+		<h>404: We couldn't find the page you requested.</h>
+		<p>So here's a shark instead,</p>
+		<div style="margin-top: 50px;">
+			<img src="./images/Left_shark.gif" alt="Left Shark animation" />
+		</div>
 	</div>
-	<div>
-		<img style="display:block;margin-left:auto;margin-right:auto;width:20%;" src="images/Left_shark.webp" alt="Left Shark Image" />
-	</div>
-	
+
 </body>
 </html>
