@@ -4,7 +4,7 @@ let result = (document.cookie).match(/[userId]+=\d,/g);
 const user_id =Number(result[0].match(/\d/g));
 
 
-url = "https://cardboardmc.com/LAMPAPI/GetUserContacts.php";
+url = "https://cardboardmc.com/LAMPAPI/GetContacts.php";
 
 temp ={"userId": user_id};
 
