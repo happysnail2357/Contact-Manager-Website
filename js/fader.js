@@ -1,15 +1,18 @@
 
-function pageTransition(pagename, id) {
+function pageTransition(pagename)
+{
 	setTimeout(changePage, 1000, pagename);
 
-	textblock = document.getElementById(id);
+	fadable = document.getElementsByClassName("fade-me-in");
 
-	if (textblock) {
-		textblock.classList.remove("fade-me-in");
-		textblock.classList.add("fade-me-out");
+	for (let i = 0; i < fadable.length; i++)
+	{
+		//fadable[i].classList.remove("fade-me-in");
+		fadable[i].classList.add("fade-me-out");
 	}
 }
 
-function changePage(pagename) {
+function changePage(pagename)
+{
 	window.location.href = pagename;
 }
