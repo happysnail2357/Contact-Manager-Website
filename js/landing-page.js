@@ -12,7 +12,7 @@ let state =
 {
     'querySet': [],
     'page':1,
-    "rows":3,
+    "rows":5,
 };
 
 let currentpage= 1;
@@ -613,6 +613,8 @@ function doLogout()
 
 function buttonVisibility(currentpage){
 
+
+    
     let MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
 
     if(MAX_PAGE ==0){
@@ -628,9 +630,14 @@ function buttonVisibility(currentpage){
 
     if(currentpage ==1){
         $("#left").addClass("d-none");
+        $("#header").removeClass("d-none");
 
     }else{
         $("#left").removeClass("d-none");
+        $("#header").addClass("d-none");
+
 
     }
+
+
 }
