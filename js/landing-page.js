@@ -4,9 +4,7 @@ let result = (document.cookie).match(/userId=(\d+),/)
 const user_id =Number(result[1]);
 
 
-url = "https://cardboardmc.com/LAMPAPI/GetContacts.php";
 
-temp ={"userId": user_id};
 
 let jsonObject = "";
 
@@ -19,27 +17,24 @@ let state =
 
 let currentpage= 1;
 let MAX_PAGE = 1;
+
+url = "https://cardboardmc.com/LAMPAPI/GetContacts.php";
+
+const temp ={"userId": user_id};
 postData(url, temp).then(data=>
     {
         state.querySet = data;
-        MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
-
-        if(MAX_PAGE==0){
-            MAX_PAGE =1;
-        }
-        if(currentpage==MAX_PAGE){ 
-            $("#right").addClass("d-none");
-
-        }
+        
+        buttonVisibility(currentpage);
 
         buildTable();
 
 
     }
-);
+)
 
 
-$("#left").addClass("d-none");
+
 
 const emojis = {
    
@@ -68,56 +63,41 @@ const emoji_length = Object.keys(emojis).length;
 const table = document.getElementById("t-body");
 
 
+$(document).ready(function(){
 
-$("#left").on("click", function(){
-    currentpage--;
-    $("#t-body").empty();
-    state.page = currentpage;
-    buildTable();
-    MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+    $("#right").on("click", function(){
 
-    if(currentpage != MAX_PAGE){
-     $("#right").removeClass("d-none");
-    }
+    
+        currentpage++;
+        $("#t-body").empty();
+        state.page = currentpage;
+        buildTable();
+    
+        buttonVisibility(currentpage);
+       
+    
+    
+    });
 
-    if(currentpage==1){
-        $("#header").removeClass("d-none");
-    }
+    $("#right").click();
 
-    if(currentpage==1){
-        $("#left").addClass("d-none");
-    }
-});
+    $("#left").on("click", function(){
 
-$("#right").on("click", function(){
+        currentpage--;
+        $("#t-body").empty();
+        state.page = currentpage;
+        buildTable();
+        buttonVisibility(currentpage);
+  
+    
+    });
+    $("#left").click();
 
-    MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
-    console.log(MAX_PAGE);
-
-
-    currentpage++;
-    $("#t-body").empty();
-    state.page = currentpage;
-    buildTable();
-
-    if(currentpage==MAX_PAGE){
-        $("#right").addClass("d-none");
-
-    }
-    if(currentpage==1){
-        $("#left").addClass("d-none");
-    }else{
-        $("#left").removeClass("d-none");
-
-    }
-
-    if(currentpage!=1){
-        $("#header").addClass("d-none");
-    }else{
-        $("#header").removeClass("d-none");
-    }
 
 });
+
+
+
 
 function pagination(querySet, page, rows){
     let trimStart = (page-1)*rows;
@@ -134,7 +114,7 @@ function pagination(querySet, page, rows){
 
 
 function buildTable(){
-    console.log(state.querySet);
+   
     data = pagination(state.querySet, state.page, state.rows);
     let list = data.querySet;
 
@@ -163,21 +143,6 @@ function pagination(querySet, page, rows){
 
 
 
-$(".page-item").on("click",function(){
-    console.log($(this).text());
-
-    if($(this).text()!=1){
-        $("#header").addClass("d-none");
-    }else{
-        $("#header").removeClass("d-none");
-
-    }
-    $("#t-body").empty();
-    state.page =$(this).text();
-    buildTable();
-})
-
-
 
 
 
@@ -186,80 +151,67 @@ $(".page-item").on("click",function(){
 $("#search-input").on( "keyup change",function()
 {
 
-    const input = $(this).val();
-    console.log(input);
+    let input = $(this).val();
+ 
 
-    if(input.length!=0){
+    if(input.length != 0){
 
        
         url = "https://cardboardmc.com/LAMPAPI/Search.php";
         
         
-        temp = {"userId" : user_id, "query": input};
+        let search_json = {"userId" : user_id, "query": input};
     
-
-        postData(url,temp).then((data)=>
+        postData(url,search_json).then((data)=>
         {   
+            
+            $("#t-body").empty();
            
             if(data.error !='Could not find any contacts.'){
-              
-                
-                
 
-                $("#t-body").empty();
-                currentpage =1;
-                state.page = currentpage;
+
 
                 state.querySet = data;
 
-                MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
-                
-
                 buildTable();
             }else{
-                $("#t-body").empty();
+                
                 currentpage =1;
                 state.page = currentpage;
                 MAX_PAGE =1;
-                state.querySet = [];
+                state.querySet = "";
             }
-            if(currentpage ==MAX_PAGE){
-                $("#right").addClass("d-none");
-    
-            }else{
-                $("#right").removeClass("d-none");
-
-            }
-
-            if(currentpage ==1){
-                $("#left").addClass("d-none");
-    
-            }else{
-                $("#left").removeClass("d-none");
-
-            }
+            buttonVisibility(currentpage);
+           
             
         }).catch((e)=>{
-            console.log(e);
+            console.log("search api " + e);
+            currentpage = 1;
+            state.querySet = "";
+            $("#t-body").empty();
+            buttonVisibility(currentpage);
+
         });
-    }else{
-
-
+    }
+    else{
+        
+   
+        url = "https://cardboardmc.com/LAMPAPI/GetContacts.php";
         postData(url, temp).then(data=>
-            {
+        {
                 $("#t-body").empty();
                 currentpage =1;
                 state.page = currentpage;
                 state.querySet = data;
-                MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
-                if(currentpage ==MAX_PAGE){
-                    $("#right").addClass("d-none");
-        
-                }
-        
+
                 buildTable();
-            }
-        );
+                buttonVisibility(currentpage);
+
+        }
+        ).catch((e)=>
+        {
+            console.log("get contact api "+e);
+        });
     }
 
 
@@ -293,16 +245,11 @@ $("#trash-icon").click(function(event){
 
                 for(i of searchIDs){
                     let index = state.querySet.findIndex(item => item.ID == i);
-                    console.log(index);
+                 
                     state.querySet.splice(index,1);
                 }
 
-                MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
-                if(currentpage==MAX_PAGE){
-                    $("#right").addClass("d-none");
-                    currentpage == MAX_PAGE;
-                }
-              
+                buttonVisibility(currentpage);
                 
                 $("#t-body").empty();
                 buildTable(); 
@@ -418,18 +365,15 @@ $('#userinfo').on('show.bs.modal', function (event)
 
                         }
                         $("#t-body").empty();
-                        $("#left").addClass("d-none");
+                       
                         
                         state.querySet.unshift(get_contact_info);
                         currentpage =1;
-
+                        buttonVisibility(currentpage);
                         state.page =currentpage;
                         buildTable();     
-                        MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
-                        if(MAX_PAGE !=1){
-                            $("#right").removeClass("d-none");
                     
-                        }
+
     
                     }).then(()=>
                     {
@@ -667,3 +611,26 @@ function doLogout()
 }
 
 
+function buttonVisibility(currentpage){
+
+    let MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+
+    if(MAX_PAGE ==0){
+        MAX_PAGE =1;
+    }
+    if(currentpage ==MAX_PAGE){
+        $("#right").addClass("d-none");
+
+    }else{
+        $("#right").removeClass("d-none");
+
+    }
+
+    if(currentpage ==1){
+        $("#left").addClass("d-none");
+
+    }else{
+        $("#left").removeClass("d-none");
+
+    }
+}
