@@ -12,7 +12,7 @@ let jsonObject = "";
 
 let state = 
 {
-    'querySet': "",
+    'querySet': [],
     'page':1,
     "rows":3,
 };
