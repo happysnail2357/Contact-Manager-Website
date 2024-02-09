@@ -10,7 +10,14 @@ body{
     background-image: url('/images/waveBackground.png');
     background-size: cover;
 }
-
+h1{
+    text-align: center;
+    color:black;
+    padding: .5em;
+    font-size: 31px;
+    font-family: 'Gowun Batang', serif;
+    text-transform: uppercase;
+}
 h2 {
     text-align: center;
     color:white;
@@ -18,7 +25,10 @@ h2 {
     font-size: 30px;
     font-family: 'Gowun Batang', serif;
     text-transform: uppercase;
-    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for depth */ 
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); 
+}
+p.signup-link {
+    font-size: 20px; 
 }
 label{
     color:white;
@@ -46,12 +56,12 @@ label{
     margin: 30px;
     border: none;
     padding: 5px;
-    border-radius: 30px; /* Softer rounded corners */
+    border-radius: 30px; 
     color: #182a38; 
     background-color: #f9d876;
-    font-family: 'Gowun Batang', serif; /* Using the same font as the labels for consistency */
-    font-size: 17px; /* Slightly larger text for better readability */
-    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); /* Adding a subtle shadow for depth */ 
+    font-family: 'Gowun Batang', serif; 
+    font-size: 17px; 
+    box-shadow: 0 10px 6px rgba(0, 0, 0, 0.1); 
    
 }
 .login-btn:hover{ 
@@ -71,7 +81,7 @@ input{
     padding: 10px;
     margin-bottom: 15px;
     border: 2px solid #ccc;
-    border-radius: 30px; /* Round the corners of the input box */
+    border-radius: 30px; 
     background-color: #f9f9f9; 
     box-shadow: 0 10px 5px rgba(0, 0, 0, 0.1); 
     opacity: 0.4;

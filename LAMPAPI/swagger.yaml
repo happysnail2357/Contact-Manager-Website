@@ -57,6 +57,54 @@ paths:
           description: URL Not Found
         500:
           description: Server Error
+  /UpdateUser.php:
+    post:
+      tags:
+      - User
+      summary: Updates the user's password.
+      operationId: updateUser
+      description: Updates the user's password.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: updateUser
+        description: Update User
+        schema:
+          $ref: '#/definitions/UpdateUser'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
+  /DeleteUser.php:
+    post:
+      tags:
+      - User
+      summary: Deletes the user along with all their contacts.
+      operationId: deleteUser
+      description: Deletes the user along with all their contacts.
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: deleteUser
+        description: Delete User
+        schema:
+          $ref: '#/definitions/DeleteUser'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error
   /CreateContact.php:
     post:
       tags:
@@ -81,23 +129,23 @@ paths:
           description: URL Not Found
         500:
           description: Server Error
-  /GetContact.php:
+  /GetContacts.php:
     post:
       tags:
       - Contacts
-      summary: Retreives the desired contact from the table.
-      operationId: getContact
-      description: Retreives the desired contact from the table.
+      summary: Retreives all of the user's contacts from the table.
+      operationId: getContacts
+      description: Retreives all of the user's contacts from the table.
       consumes:
       - applicatoin/json
       produces:
       - application/json
       parameters:
       - in: body
-        name: getContact
-        description: Get Contact
+        name: getContacts
+        description: Get Contacts
         schema:
-          $ref: '#/definitions/GetContact'
+          $ref: '#/definitions/GetContacts'
       responses:
         200:
           description: OK
@@ -177,6 +225,30 @@ paths:
           description: URL Not Found
         500:
           description: Server Error       
+  /ExportContacts.php:
+    post:
+      tags:
+      - Contacts
+      summary: Returns a vcf file with the user's contacts. 
+      operationId: exportContacts
+      description: Returns a vcf file with the user's contacts.  
+      consumes:
+      - applicatoin/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: exportContacts
+        description: Export Contacts
+        schema:
+          $ref: '#/definitions/ExportContacts'
+      responses:
+        200:
+          description: OK
+        404:
+          description: URL Not Found
+        500:
+          description: Server Error  
           
 definitions:
   Register:
@@ -211,6 +283,26 @@ definitions:
       password:
         type: string
         example: "secret"
+  UpdateUser:
+    type: object
+    required:
+    - userId
+    - password
+    properties:
+      userId:
+        type: integer
+        example: 1
+      password:
+        type: string
+        example: "secret"
+  DeleteUser:
+    type: object
+    required:
+    - userId
+    properties:
+      userId:
+        type: integer
+        example: 1
   CreateContact:
     type: object
     required:
@@ -245,16 +337,12 @@ definitions:
       userId:
         type: integer
         example: 1
-  GetContact:
+  GetContacts:
     type: object
     required:
     - userId
-    - contactId
     properties:
       userId:
-        type: integer
-        example: 1
-      contactId:
         type: integer
         example: 1
   UpdateContact:
@@ -294,7 +382,7 @@ definitions:
     required:
     - contactId
     properties:
-      id:
+      contactId:
         type: integer
         example: 1
   Search:
@@ -309,6 +397,14 @@ definitions:
       query:
         type: string
         example: "Joe S"
+  ExportContacts:
+    type: object
+    required:
+    - userId
+    properties:
+      userId:
+        type: integer
+        example: 1
   
 host: 159.203.170.88
 basePath: /LAMPAPI

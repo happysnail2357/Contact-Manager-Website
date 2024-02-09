@@ -25,7 +25,7 @@
 
             # Commit the transaction
             $conn->commit();
-            sendResultInfoAsJson("User and contacts deleted successfully.");
+            returnWithInfo("User and contacts deleted successfully.");
         } catch (Exception $e) {
             # Rollback the transaction on error
             $conn->rollback();
@@ -51,4 +51,11 @@
         $retValue = '{"error":"' . $err . '"}';
         sendResultInfoAsJson($retValue);
     }
+
+    function returnWithInfo($msg)
+	{
+		
+		$retValue = '{"msg":"' .$msg. '"}';
+		sendResultInfoAsJson($retValue);
+	}
 ?>

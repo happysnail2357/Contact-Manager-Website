@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Log In | All My Beaches</title>
+	<link rel="stylesheet" href="css/page.css">
+	<link rel="stylesheet" href="css/login-signup.css">
+
+	<script src="js/fader.js"></script>
+
+	<script defer src="js/Login.js" ></script>
+</head>
+<body>
+	<header>
+		<a href="#" onclick="pageTransition('/')">All My Beaches</a>
+	</header>
+
+	<div class="centered-block">
+		<form id="login-form" class="generic-form login-form fade-me-in">
+			<div class="input-group">
+				<label for="username">Username</label>
+				<input type="text" name="username" id="username" autocomplete="on">
+				<p1 id="username-error"></p1>
+			</div>
+			<div class="input-group">
+				<label for="password">Password</label>
+				<input type="password" name="password" id="password" autocomplete="on">
+				<p1 id="password-error"></p1>
+			</div>
+
+			<button type="button" id="login-btn">Log In</button>
+
+			<p>Don't have an account? <a href="#" onclick="pageTransition('signup.html')">Sign Up</a></p>
+		</form>
+	</div>
+
+</body>
+</html>
