@@ -663,7 +663,7 @@ $("#delete-btn-user").click(function(){
 function doLogout()
 {
 	document.cookie = "";
-	window.location.href = "index.html";
+	window.location.href = "log-out.html";
 }
 
 
