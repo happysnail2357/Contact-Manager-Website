@@ -18,7 +18,7 @@
 <body style="margin:0px; padding:0px; ">
 
     <div  id="header" class="container d-flex" style="background-color: var(--sixth); max-width:100vw;">
-        <p class="navbar-brand mx-auto" style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem;color:white; ">Contacts</p>
+        <p class="navbar-brand mx-auto" style="font-family: 'Bebas Neue', sans-serif; font-size: 2rem;color:white; ">All My Beaches</p>
     </div>
 <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg-sm-md sticky-top" role="navigation">
@@ -59,7 +59,9 @@
             <div class="collapse navbar-collapse ms-auto" id = "nav">
                 <ul class="navbar-nav ms-3" >
                     <li class="nav-item">
-                        <a href="log-out.html" class="nav-link active" style="color:var(--text);">Log Out</a>
+                        <button type="button" class="btn btn-link nav-link active"style="color:var(--text); margin:0px;" onclick="doLogout()">Log Out</button>
+
+                        <!-- <a class="nav-link active" style="color:var(--text);"><button class="btn btn-link nav-link active" onclick="doLogout()">Log Out</button></a>  -->
                     </li>
                     <li class="nav-item">
                         <button type="button" class="btn btn-link nav-link active"style="color:var(--text); margin:0px;" data-bs-toggle="modal" data-bs-target="#delete-modal">Delete Account</button>

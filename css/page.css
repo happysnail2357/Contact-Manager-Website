@@ -33,6 +33,11 @@ header > a {
 	font-weight: bold;
 }
 
+header > a:hover {
+	animation: homehover;
+	animation-duration: 0.5s;
+	animation-fill-mode: both;
+}
 
 
 .centered-block {
@@ -80,5 +85,10 @@ footer {
 @keyframes fadeout {
 	from {opacity: 1;}
 	to {opacity: 0;}
+}
+
+@keyframes homehover {
+	from {font-size: 35px;}
+	to {font-size: 37px;}
 }
 

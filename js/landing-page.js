@@ -1,6 +1,10 @@
 
 //Gets UserId
 let result = (document.cookie).match(/userId=(\d+),/)
+if(document.cookie == '')
+{
+    window.location.href = "login.html";
+}
 const user_id =Number(result[1]);
 
 
@@ -31,8 +35,7 @@ postData(url, temp).then(data=>
 
 
     }
-)
-
+);
 
 
 
@@ -143,9 +146,19 @@ function pagination(querySet, page, rows){
 
 
 
+$(".page-item").on("click",function(){
+    console.log($(this).text());
 
+    if($(this).text()!=1){
+        $("#header").addClass("d-none");
+    }else{
+        $("#header").removeClass("d-none");
 
-
+    }
+    $("#t-body").empty();
+    state.page =$(this).text();
+    buildTable();
+})
 
 // After button clicked, sends a request to Search API
 $("#search-input").on( "keyup change",function()
@@ -607,7 +620,7 @@ $("#delete-btn-user").click(function(){
 function doLogout()
 {
 	document.cookie = "";
-	window.location.href = "index.html";
+	window.location.href = "log-out.html";
 }
 
 
