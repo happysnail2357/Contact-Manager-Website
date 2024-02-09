@@ -1,64 +1,266 @@
 
 //Gets UserId
-let result = (document.cookie).match(/[userId]+=\d,/g);
-const user_id =Number(result[0].match(/\d/g));
+let result = (document.cookie).match(/userId=(\d+),/)
+const user_id =Number(result[1]);
 
 
-url = "https://cardboardmc.com/LAMPAPI/GetUserContacts.php";
+url = "https://cardboardmc.com/LAMPAPI/GetContacts.php";
 
 temp ={"userId": user_id};
 
+let jsonObject = "";
+
+let state = 
+{
+    'querySet': "",
+    'page':1,
+    "rows":3,
+};
+
+let currentpage= 1;
+let MAX_PAGE = 1;
+postData(url, temp).then(data=>
+    {
+        state.querySet = data;
+        MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+
+        if(MAX_PAGE==0){
+            MAX_PAGE =1;
+        }
+        if(currentpage==MAX_PAGE){ 
+            $("#right").addClass("d-none");
+
+        }
+
+        buildTable();
+
+
+    }
+);
+
+
+$("#left").addClass("d-none");
 
 const emojis = {
-    "Silent": `<svg class="emoji" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.b{fill:#864e20}</style></defs><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path class="b" d="M7.055 7.313A1.747 1.747 0 1 0 8.8 9.059a1.747 1.747 0 0 0-1.745-1.746zM16.958 7.313A1.747 1.747 0 1 0 18.7 9.059a1.747 1.747 0 0 0-1.742-1.746z"/><path d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z" style="fill:#e7c930"/><path class="b" d="m12.991 13.937 1.091-1.09a.555.555 0 0 0 0-.785l-.206-.207a.556.556 0 0 0-.785 0L12 12.946l-1.091-1.091a.556.556 0 0 0-.785 0l-.206.207a.555.555 0 0 0 0 .785l1.091 1.09-1.091 1.091a.555.555 0 0 0 0 .785l.206.207a.556.556 0 0 0 .785 0L12 14.929l1.091 1.091a.556.556 0 0 0 .785 0l.206-.207a.555.555 0 0 0 0-.785z"/></svg>`,
-    "Shock":`<svg class="emoji" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.b{fill:#864e20}.c{fill:#e7c930}</style></defs><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path class="b" d="M12 5.417a2.934 2.934 0 1 0 2.934 2.934A2.935 2.935 0 0 0 12 5.417z"/><path class="c" d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z"/><path class="b" d="M16.083 13.841A5.487 5.487 0 0 0 12 12.091a5.487 5.487 0 0 0-4.083 1.75c-.959 1.292-.147 2.667.885 2.583s2.781-.285 3.2-.285 2.167.2 3.2.285 1.84-1.291.881-2.583z"/><path d="M13.75 14.551c-1.344-.3-1.75.109-1.75.109s-.406-.406-1.75-.109a2.463 2.463 0 0 0-1.65 1.87 1.1 1.1 0 0 0 .207 0c1.031-.083 2.781-.285 3.2-.285s2.167.2 3.2.285a1.1 1.1 0 0 0 .207 0 2.463 2.463 0 0 0-1.664-1.87z" style="fill:#f06880"/><path class="c" d="M13.965 17.2A9.842 9.842 0 0 0 12 16.9a9.842 9.842 0 0 0-1.965.3c-.294.061-.3.3 0 .261S12 17.326 12 17.326s1.663.09 1.965.13.294-.2 0-.256z"/></svg>`,
-    "Smirk":`<svg  class="emoji" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.b{fill:#864e20}</style></defs><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path class="b" d="M12 5.417a2.934 2.934 0 1 0 2.934 2.934A2.935 2.935 0 0 0 12 5.417z"/><path d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z" style="fill:#e7c930"/><path class="b" d="M16.53 12.324a8.617 8.617 0 0 1-.494.726 5.59 5.59 0 0 1-1.029 1.058 4.794 4.794 0 0 1-.6.412 1.6 1.6 0 0 1-.162.091c-.055.028-.109.061-.164.09-.115.051-.226.115-.346.163-.26.119-.533.223-.819.329a.231.231 0 0 0 .055.446 3.783 3.783 0 0 0 .979-.022 3.484 3.484 0 0 0 .878-.25 3.718 3.718 0 0 0 .409-.205l.012-.007a4.1 4.1 0 0 0 .379-.26 3.51 3.51 0 0 0 1.1-1.465 3.381 3.381 0 0 0 .222-.871c0-.031.006-.061.009-.092a.231.231 0 0 0-.429-.143z"/></svg>`,
-    "Excited": `<svg class="emoji" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.b{fill:#864e20}.e{fill:#e6e7e8}</style></defs><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path class="b" d="M8.907 9.844a.182.182 0 0 1-.331.1 2.016 2.016 0 0 0-.569-.567 1.731 1.731 0 0 0-1.915 0 2.016 2.016 0 0 0-.571.569.182.182 0 0 1-.331-.1 1.632 1.632 0 0 1 .346-1.023 1.927 1.927 0 0 1 3.026 0 1.64 1.64 0 0 1 .345 1.021zM18.81 9.844a.182.182 0 0 1-.331.1 2.026 2.026 0 0 0-.568-.567 1.732 1.732 0 0 0-1.916 0 2.016 2.016 0 0 0-.571.569.182.182 0 0 1-.331-.1 1.632 1.632 0 0 1 .346-1.023 1.927 1.927 0 0 1 3.026 0 1.64 1.64 0 0 1 .345 1.021z"/><path d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z" style="fill:#e7c930"/><path d="M7.127 12h9.746a1.937 1.937 0 0 1 1.937 1.937 1.938 1.938 0 0 1-1.937 1.938H7.127a1.937 1.937 0 0 1-1.937-1.937A1.937 1.937 0 0 1 7.127 12z" style="fill:#fff"/><ellipse class="e" cx="12" cy="13.938" rx="6.188" ry=".25"/><ellipse class="e" cx="7.257" cy="13.938" rx=".208" ry="1.438"/><ellipse class="e" cx="9.628" cy="13.938" rx=".208" ry="1.438"/><ellipse class="e" cx="12" cy="13.938" rx=".208" ry="1.438"/><ellipse class="e" cx="14.372" cy="13.938" rx=".208" ry="1.438"/><ellipse class="e" cx="16.743" cy="13.938" rx=".208" ry="1.438"/></svg>`,
-    "GlassesKiss":`<svg  class="emoji" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z" style="fill:#e7c930"/><path d="M21.554 5.693c-.063-.289-2.888-.829-4.871-.829a5.584 5.584 0 0 0-3.3.7A3.125 3.125 0 0 1 12 5.919a3.125 3.125 0 0 1-1.381-.352 5.584 5.584 0 0 0-3.3-.7c-1.983 0-4.808.54-4.871.829s-.113 1.217.088 1.381.439.025.477.6.477 2.976 1.808 3.767 3.741.163 4.6-.365A4.3 4.3 0 0 0 11.3 8.568c.138-.892.351-1.507.7-1.507s.565.615.7 1.507a4.3 4.3 0 0 0 1.883 2.51c.854.528 3.264 1.155 4.6.365s1.77-3.189 1.808-3.767.276-.439.477-.6.149-1.095.086-1.383z" style="fill:#101820"/><path d="M13.308 14.129a1.183 1.183 0 0 0 .434-.908 1.34 1.34 0 0 0-.984-1.2.312.312 0 0 0-.414.228v.005a.312.312 0 0 0 .2.355c.215.081.575.269.575.613 0 .425-.5.608-.516.616a.317.317 0 0 0-.21.3.311.311 0 0 0 .226.292.717.717 0 0 1 .5.68c0 .269-.366.453-.584.54a.31.31 0 0 0-.145.119l-.1.024.061.243a.311.311 0 0 0 .412.2c.366-.146.98-.486.98-1.123a1.285 1.285 0 0 0-.435-.984z" style="fill:#864e20"/><path d="M19.1 13.013a1.3 1.3 0 0 0-1.768.1l-.381.382-.382-.381a1.3 1.3 0 0 0-1.768-.1 1.249 1.249 0 0 0-.048 1.813l1.885 1.887a.441.441 0 0 0 .625 0l1.886-1.887a1.25 1.25 0 0 0-.049-1.814z" style="fill:#f06880"/></svg>`,
-    "BigFrown":`<svg  class="emoji" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><defs><style>.b{fill:#864e20}.c{fill:#e7c930}</style></defs><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path class="b" d="M7.055 7.313A1.747 1.747 0 1 0 8.8 9.059a1.747 1.747 0 0 0-1.745-1.746zM16.958 7.313A1.747 1.747 0 1 0 18.7 9.059a1.747 1.747 0 0 0-1.742-1.746z"/><path class="c" d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z"/><ellipse class="b" cx="12" cy="13.375" rx="5.479" ry=".297"/><ellipse class="c" cx="12" cy="14.646" rx="1.969" ry=".229"/></svg>`,
-    "GlassesMoustache":`<svg  class="emoji" xmlns="https://www.w3.org/2000/svg" viewBox="0 0 24 24"><rect x="1" y="1" width="22" height="22" rx="7.656" style="fill:#f8de40"/><path d="M23 13.938a14.69 14.69 0 0 1-12.406 6.531c-5.542 0-6.563-1-9.142-2.529A7.66 7.66 0 0 0 8.656 23h6.688A7.656 7.656 0 0 0 23 15.344z" style="fill:#e7c930"/><path d="M19.2 13.794a5.027 5.027 0 0 1-3.035-1.927 2.629 2.629 0 0 0-3.2-.64A2.948 2.948 0 0 0 12 12.379a2.957 2.957 0 0 0-.964-1.152 2.631 2.631 0 0 0-3.2.64A5.024 5.024 0 0 1 4.8 13.794a.441.441 0 0 0-.371.67A3.659 3.659 0 0 0 8 16.264c2.374-.139 3.532-.979 4-1.833.466.854 1.624 1.694 4 1.833a3.661 3.661 0 0 0 3.58-1.812.439.439 0 0 0-.38-.658z" style="fill:#864e20"/><path d="M21.554 5.693c-.063-.289-2.888-.829-4.871-.829a5.584 5.584 0 0 0-3.3.7A3.125 3.125 0 0 1 12 5.919a3.125 3.125 0 0 1-1.381-.352 5.584 5.584 0 0 0-3.3-.7c-1.983 0-4.808.54-4.871.829s-.113 1.217.088 1.381.439.025.477.6.477 2.976 1.808 3.767 3.741.163 4.6-.365A4.3 4.3 0 0 0 11.3 8.568c.138-.892.351-1.507.7-1.507s.565.615.7 1.507a4.3 4.3 0 0 0 1.883 2.51c.854.528 3.264 1.155 4.6.365s1.77-3.189 1.808-3.767.276-.439.477-.6.149-1.095.086-1.383z" style="fill:#101820"/></svg>`
+   
+   "beluga": `<img src="images/beluga.svg" alt="">`,
+   "boat":`<img src="images/boat.svg" alt="">`,
+   "coral":`<img src="images/coral.svg" alt="">`,
+   "crab":`<img src="images/crab.svg" alt="">`,
+   "dolphin":`<img src="images/dolphin.svg" alt="">`,
+   "fish":`<img src="images/fish.svg" alt="">`,
+   "fish2":`<img src="images/fish2.svg" alt="">`,
+   "jellyfish":`<img src="images/jellyfish.svg" alt="">`,
+   "orca":`<img src="images/orca.svg" alt="">`,
+   "orcasprout":`<img src="images/orcasprout.svg" alt="">`,
+   "sailing":`<img src="images/sailing.svg" alt="">`,
+   "sandal":`<img src="images/sandal.svg" alt="">`,
+   "shark":`<img src="images/shark.svg" alt="">`,
+   "surfer":`<img src="images/surfer.svg" alt="">`,
+   "smiley": `<img src="images/smiley.svg" alt="">`,
+   "umbrella":`<img src="images/umbrella.svg" alt="">`,
+   "whale":`<img src="images/whale.svg" alt="">`,
+   "whalesprout":`<img src="images/whalesprout.svg" alt="">`,
 }
-let jsonObject = "";
+
+const emoji_length = Object.keys(emojis).length;
+
 const table = document.getElementById("t-body");
 
 
-postData(url,temp).then((data)=>
-{   
-    jsonObject = data;
-   
-   
-    for(let i in jsonObject){
-        fill_in_table(jsonObject[i],table);
+
+$("#left").on("click", function(){
+    currentpage--;
+    $("#t-body").empty();
+    state.page = currentpage;
+    buildTable();
+    MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+
+    if(currentpage != MAX_PAGE){
+     $("#right").removeClass("d-none");
     }
-    
+
+    if(currentpage==1){
+        $("#header").removeClass("d-none");
+    }
+
+    if(currentpage==1){
+        $("#left").addClass("d-none");
+    }
 });
+
+$("#right").on("click", function(){
+
+    MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+    console.log(MAX_PAGE);
+
+
+    currentpage++;
+    $("#t-body").empty();
+    state.page = currentpage;
+    buildTable();
+
+    if(currentpage==MAX_PAGE){
+        $("#right").addClass("d-none");
+
+    }
+    if(currentpage==1){
+        $("#left").addClass("d-none");
+    }else{
+        $("#left").removeClass("d-none");
+
+    }
+
+    if(currentpage!=1){
+        $("#header").addClass("d-none");
+    }else{
+        $("#header").removeClass("d-none");
+    }
+
+});
+
+function pagination(querySet, page, rows){
+    let trimStart = (page-1)*rows;
+    let trimEnd = trimStart+rows;
+
+    let trimmedData = querySet.slice(trimStart,trimEnd);
+    let pages = Math.ceil(querySet.length/rows);
+
+    return{
+        'querySet':trimmedData,
+        'pages':pages
+    }
+}
+
+
+function buildTable(){
+    console.log(state.querySet);
+    data = pagination(state.querySet, state.page, state.rows);
+    let list = data.querySet;
+
+
+    for(i in list){
+        fill_in_table(list[i],table);
+        
+    }
+}
+
+
+
+function pagination(querySet, page, rows){
+    let trimStart = (page-1)*rows;
+    let trimEnd = trimStart+rows;
+
+    let trimmedData = querySet.slice(trimStart,trimEnd);
+    let pages = Math.ceil(querySet.length/rows);
+
+    return{
+        'querySet':trimmedData,
+        'pages':pages
+    }
+}
+
+
+
+
+$(".page-item").on("click",function(){
+    console.log($(this).text());
+
+    if($(this).text()!=1){
+        $("#header").addClass("d-none");
+    }else{
+        $("#header").removeClass("d-none");
+
+    }
+    $("#t-body").empty();
+    state.page =$(this).text();
+    buildTable();
+})
+
+
+
+
 
 
 // After button clicked, sends a request to Search API
-$("#search-btn").click(function(){
+$("#search-input").on( "keyup change",function()
+{
 
-    const input = document.getElementById("search-input").value;
-    clear_screen();
+    const input = $(this).val();
+    console.log(input);
 
-    url = "https://cardboardmc.com/LAMPAPI/Search.php";
-    
-    
-    temp = {"userId" : user_id, "query": input};
-    let contacts_array = "";
+    if(input.length!=0){
 
-    postData(url,temp).then((data)=>
-    {   
+       
+        url = "https://cardboardmc.com/LAMPAPI/Search.php";
         
-        if(data.error !='Could not find any contacts.'){
-            contacts_array = data;
-            display(contacts_array);
-        }else{
-            console.log("Could not find any contacts.");
-        }
         
-    }).catch((e)=>{
-        console.log(e);
-    });
+        temp = {"userId" : user_id, "query": input};
+    
+
+        postData(url,temp).then((data)=>
+        {   
+           
+            if(data.error !='Could not find any contacts.'){
+              
+                
+                
+
+                $("#t-body").empty();
+                currentpage =1;
+                state.page = currentpage;
+
+                state.querySet = data;
+
+                MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+                
+
+                buildTable();
+            }else{
+                $("#t-body").empty();
+                currentpage =1;
+                state.page = currentpage;
+                MAX_PAGE =1;
+                state.querySet = [];
+            }
+            if(currentpage ==MAX_PAGE){
+                $("#right").addClass("d-none");
+    
+            }else{
+                $("#right").removeClass("d-none");
+
+            }
+
+            if(currentpage ==1){
+                $("#left").addClass("d-none");
+    
+            }else{
+                $("#left").removeClass("d-none");
+
+            }
+            
+        }).catch((e)=>{
+            console.log(e);
+        });
+    }else{
+
+
+        postData(url, temp).then(data=>
+            {
+                $("#t-body").empty();
+                currentpage =1;
+                state.page = currentpage;
+                state.querySet = data;
+                MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+                if(currentpage ==MAX_PAGE){
+                    $("#right").addClass("d-none");
+        
+                }
+        
+                buildTable();
+            }
+        );
+    }
 
 
 });
@@ -71,9 +273,11 @@ $("#trash-icon").click(function(event){
 
     event.preventDefault();
     
-    let searchIDs = $("input:checkbox:checked").map(function(){
+    let searchIDs = $("input:checkbox:checked").map(function()
+    {
         return $(this).val();
     }).toArray();
+
 
     if(searchIDs!=0)
     {
@@ -84,9 +288,28 @@ $("#trash-icon").click(function(event){
             }).toArray();
             url ="https://cardboardmc.com/LAMPAPI/DeleteContact.php";
             
-         
+            delete_list(url, searchIDs).then(()=>
+            {
+
+                for(i of searchIDs){
+                    let index = state.querySet.findIndex(item => item.ID == i);
+                    console.log(index);
+                    state.querySet.splice(index,1);
+                }
+
+                MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+                if(currentpage==MAX_PAGE){
+                    $("#right").addClass("d-none");
+                    currentpage == MAX_PAGE;
+                }
+              
                 
-            delete_list(url, searchIDs).then(()=>$("#warning-modal").modal("hide")).catch();
+                $("#t-body").empty();
+                buildTable(); 
+                $("#warning-modal").modal("hide");
+
+
+            }).catch();
         });
         
         
@@ -104,13 +327,14 @@ $("#trash-icon").click(function(event){
 
 $('#userinfo').on('show.bs.modal', function (event) 
     {
-        let emoji_name = "BigFrown";
+        let emoji_name = "smiley";
         let emoji_index = 0;
 
         //The emoji svg image is clicked
         $("#emoji-profile").click(function()
         {
-            emoji_index = emoji_index<7?emoji_index:0;
+            
+            emoji_index = emoji_index< emoji_length ?emoji_index:0;
 
             emoji_name = Object.keys(emojis)[emoji_index];
 
@@ -124,7 +348,7 @@ $('#userinfo').on('show.bs.modal', function (event)
         let button = $(event.relatedTarget); 
         let contact_user_id = button.attr("id");
 
-        //The edit button is clicked
+        //Fills the data edit button is clicked
         if(button.attr('id') != "create-btn"){
 
         
@@ -147,9 +371,10 @@ $('#userinfo').on('show.bs.modal', function (event)
         }    
 
         if(button.attr("id")=='create-btn'){
-            $("#emoji-profile").html(emojis["BigFrown"]);
+            $("#emoji-profile").html(emojis["smiley"]);
 
         }
+
 
         $("form").off().on("submit", function(event){
             if($("#first").val() == 0 || $("#last").val() ==0 )
@@ -179,7 +404,7 @@ $('#userinfo').on('show.bs.modal', function (event)
                     
                     postData(url,get_contact_info).then((data)=>{   
                   
-                        let get_contact_info = {
+                        get_contact_info = {
                            
                             "FirstName": $("#first").val(),
                             "LastName": $("#last").val(),
@@ -192,13 +417,23 @@ $('#userinfo').on('show.bs.modal', function (event)
                             "ID": data.id
 
                         }
-                       
-                        fill_in_table(get_contact_info,table);
+                        $("#t-body").empty();
+                        $("#left").addClass("d-none");
                         
-                        
+                        state.querySet.unshift(get_contact_info);
+                        currentpage =1;
+
+                        state.page =currentpage;
+                        buildTable();     
+                        MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
+                        if(MAX_PAGE !=1){
+                            $("#right").removeClass("d-none");
+                    
+                        }
     
                     }).then(()=>
                     {
+
                         $("#userinfo").modal('hide');
                     }).catch((e)=>
                     {
@@ -211,20 +446,37 @@ $('#userinfo').on('show.bs.modal', function (event)
                     url = "https://cardboardmc.com/LAMPAPI/UpdateContact.php";     
                 
                     
-                    postData(url,get_contact_info).then((data)=>{   
-                        //changes the text inside the table
-                        $(`#t-row${contact_user_id}`).find("p").html(emojis[emoji_name]);
-                        $(`#t-row${contact_user_id}`).find(".r-first").text(get_contact_info.firstName);
-                        $(`#t-row${contact_user_id}`).find(".r-last").text(get_contact_info.lastName);
-                        $(`#t-row${contact_user_id}`).find(".r-phone").text(get_contact_info.phone);
-                        $(`#t-row${contact_user_id}`).find(".r-email").text(get_contact_info.email);
-                        $(`#t-row${contact_user_id}`).find(".r-address").text(get_contact_info.address);
-                        $(`#t-row${contact_user_id}`).find(".r-age").text(get_contact_info.age);
-                        $(`#t-row${contact_user_id}`).find(".r-birth").text(get_contact_info.birthday);
-
-
-                    }).then(()=>{
+                    postData(url,get_contact_info).then(()=>
+                    {
                         $("#userinfo").modal('hide');
+
+                        let get_contact_info = {
+                            
+                            "FirstName": $("#first").val(),
+                            "LastName": $("#last").val(),
+                            "Phone":  $("#phone").val(),
+                            "Email": $("#email").val(),
+                            "Address": $("#address").val(),
+                            "Age": $("#age").val(),
+                            "Birthday": $('#birth').val(),
+                            "Emoji": emoji_name,
+                            "ID": contact_user_id
+                        }
+
+                       
+                        let obj = state.querySet.find((o, i) => {
+                            if (o.ID == get_contact_info.ID) {
+                                state.querySet[i] =get_contact_info;
+                                
+                                return true; // stop searching
+                            }
+                        });
+
+                        $("#t-body").empty();
+                        state.page = currentpage;
+                        buildTable();
+
+
                     }).catch((e)=>{
                     
                     });
@@ -268,8 +520,9 @@ $('#userinfo').on('show.bs.modal', function (event)
 //Standard format for each contact user
 function fill_in_table(jsonObject,table){
 
+
     if(!(jsonObject.Emoji in emojis)){
-        jsonObject.Emoji = "BigFrown";
+        jsonObject.Emoji = "smiley";
     }
 	let html= `<tr id=t-row${jsonObject.ID}>
                     <td>     
@@ -391,3 +644,26 @@ function phoneNumberFormat(string){
 	}
 	return `(${string.substring(0,3)}) - ${string.substring(3,6)} - ${string.substring(6,10)}`
 }
+
+
+
+$("#delete-btn-user").click(function(){
+    let url = "https://cardboardmc.com/LAMPAPI/DeleteUser.php";
+
+    const object ={
+        "userId":user_id
+    }
+    postData(url,object).then(()=>{
+        doLogout();
+    });
+});
+
+
+
+function doLogout()
+{
+	document.cookie = "";
+	window.location.href = "index.html";
+}
+
+
