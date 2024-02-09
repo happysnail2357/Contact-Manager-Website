@@ -20,21 +20,26 @@ function doLogin(){
 	document.getElementById("username").style.borderColor = "#ccc";
 	document.getElementById("password").style.borderColor = "#ccc";
 	
+	let missingField = false;
+	
 	// Check for empty fields
 	if (login == "")
 	{
 		reportUsernameError("Username Required");
 		document.getElementById("username").style.borderColor = "red";
 		
-		return;
+		missingField = true;
 	}
 	if (password == "")
 	{
 		reportPasswordError("Password Required");
 		document.getElementById("password").style.borderColor = "red";
 		
-		return;
+		missingField = true;
 	}
+	
+	if (missingField)
+		return;
 
 	let temp = {login:login,password:password};
 
@@ -42,16 +47,17 @@ function doLogin(){
 
 	postData(url, temp).then((data) => 
 	{
-		
-		if(data.error !='No Records Found'){
+		if (data.error == '')
+		{
 			jsonObject=data;
 			saveCookie();
-			console.log(jsonObject);
 			window.location.href = "landing-page.html";
 		}
-		else{
-			console.log(data.error);
-			console.log(temp);
+		else
+		{
+			reportPasswordError("Username or Password incorrect");
+			document.getElementById("password").style.borderColor = "red";
+			document.getElementById("username").style.borderColor = "red";
 		}
   
 	});
