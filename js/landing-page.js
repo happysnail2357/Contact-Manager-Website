@@ -36,7 +36,10 @@ postData(url, temp).then(data=>
 
 
     }
-);
+).catch(error => {
+    console.log(error);
+    window.location.href = "login.html";
+});
 
 
 $("#left").addClass("d-none");
@@ -176,11 +179,6 @@ $(".page-item").on("click",function(){
     state.page =$(this).text();
     buildTable();
 })
-
-
-
-
-
 
 // After button clicked, sends a request to Search API
 $("#search-input").on( "keyup change",function()
