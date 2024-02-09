@@ -1,6 +1,10 @@
 
 //Gets UserId
 let result = (document.cookie).match(/userId=(\d+),/)
+if(document.cookie == '')
+{
+    window.location.href = "login.html";
+}
 const user_id =Number(result[1]);
 
 
@@ -31,10 +35,7 @@ postData(url, temp).then(data=>
 
 
     }
-).catch(error => {
-    console.log(error);
-    window.location.href = "login.html";
-});
+);
 
 
 
