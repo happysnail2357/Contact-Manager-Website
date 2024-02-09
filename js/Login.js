@@ -13,12 +13,34 @@ let jsonObject;
 function doLogin(){
 	let login = document.getElementById("username").value;
 	let password = document.getElementById("password").value;
+	
+	// Clear error messages if any
+	reportUsernameError('');
+	reportPasswordError('');
+	document.getElementById("username").style.borderColor = "#ccc";
+	document.getElementById("password").style.borderColor = "#ccc";
+	
+	// Check for empty fields
+	if (login == "")
+	{
+		reportUsernameError("Username Required");
+		document.getElementById("username").style.borderColor = "red";
+		
+		return;
+	}
+	if (password == "")
+	{
+		reportPasswordError("Password Required");
+		document.getElementById("password").style.borderColor = "red";
+		
+		return;
+	}
 
 	let temp = {login:login,password:password};
 
 	let url ="https://cardboardmc.com/LAMPAPI/Login.php";
 
-  postData(url, temp).then((data) => 
+	postData(url, temp).then((data) => 
 	{
 		
 		if(data.error !='No Records Found'){
@@ -35,6 +57,22 @@ function doLogin(){
 	});
 	
 }
+
+function reportUsernameError(message)
+{
+	let errorp = document.getElementById("username-error");
+	
+	errorp.textContent = message;
+}
+
+function reportPasswordError(message)
+{
+	let errorp = document.getElementById("password-error");
+	
+	errorp.textContent = message;
+}
+
+
 
 function saveCookie()
 {
