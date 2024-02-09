@@ -8,7 +8,7 @@
 	margin: 0;
 	padding-top: 3em;
 	padding-bottom: 3em;
-	background-color: #FFFFFF33;
+	background-color: #9CD1E790;
 	border-radius: 30px;
 	max-height: fit-content;
 }
@@ -47,7 +47,8 @@
 }
 
 .input-group > label {
-	color:white;
+	color: white;
+	font-weight: 800;
     padding: .5em;
     font-size: 25px;
     font-family: 'Gowun Batang', 'Times New Roman', serif;
@@ -59,10 +60,10 @@
 	height: 7px;
 	padding: 10px;
 	margin-bottom: 15px;
-	border: 2px solid #ccc;
+	border: 1px solid #ccc;
 	border-radius: 30px;
-	background-color: #ffffff;
-	color: #000000;
+	background-color: white;
+	color: black;
 	font-size: 90%;
 	font-family: 'Helvetica', Arial, Lucida Grande, sans-serif;
 	opacity: 0.6;
@@ -74,6 +75,7 @@
 
 .input-group > input:focus {
 	opacity: 0.9;
+	outline: solid 1px black;
 }
 
 .input-group > p1 {
@@ -107,7 +109,7 @@
 /* The Link */
 
 .generic-form > p {
-	color: #182a38;
+	color: white;
 	font-family: 'Gowun Batang', 'Times New Roman', serif;
 	font-size: 20px;
 }

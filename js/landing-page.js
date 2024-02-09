@@ -31,8 +31,10 @@ postData(url, temp).then(data=>
 
 
     }
-)
-
+).catch(error => {
+    console.log(error);
+    window.location.href = "login.html";
+});
 
 
 
@@ -143,9 +145,19 @@ function pagination(querySet, page, rows){
 
 
 
+$(".page-item").on("click",function(){
+    console.log($(this).text());
 
+    if($(this).text()!=1){
+        $("#header").addClass("d-none");
+    }else{
+        $("#header").removeClass("d-none");
 
-
+    }
+    $("#t-body").empty();
+    state.page =$(this).text();
+    buildTable();
+})
 
 // After button clicked, sends a request to Search API
 $("#search-input").on( "keyup change",function()
