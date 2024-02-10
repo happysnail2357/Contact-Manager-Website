@@ -16,27 +16,29 @@ body {
 
 
 header {
+	height: 110px;
+	margin: auto;
 	background-color: #2C8CB5;
 	position: sticky;
 	top: 0;
-	padding: 1em;
 	z-index: 10;
 }
 
 header > a {
 	text-align: left;
+	line-height: 95px;
+	padding-left: .5em;
     color: white;
 	font-family: 'Gowun Batang', 'Times New Roman', serif;
 	font-size: 35px;
 	text-decoration: none;
 	font-style: italic;
 	font-weight: bold;
+	transition: font-size 0.5s;
 }
 
 header > a:hover {
-	animation: homehover;
-	animation-duration: 0.5s;
-	animation-fill-mode: both;
+	font-size: 38px;
 }
 
 
@@ -59,7 +61,7 @@ footer {
 
 
 
-/* Transitions */
+/* Animations */
 
 
 .fade-me-in {
@@ -85,10 +87,5 @@ footer {
 @keyframes fadeout {
 	from {opacity: 1;}
 	to {opacity: 0;}
-}
-
-@keyframes homehover {
-	from {font-size: 35px;}
-	to {font-size: 37px;}
 }
 
