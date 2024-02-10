@@ -164,3 +164,44 @@ async function postData(url = "", data = {})
 	return response.json(); 
 }
 
+
+
+function processFNameEnter()
+{
+	if (event.keyCode == 13)
+	{
+		document.getElementById("l-name").focus();
+	}
+}
+
+function processLNameEnter()
+{
+	if (event.keyCode == 13)
+	{
+		document.getElementById("username").focus();
+	}
+}
+
+function processUsernameEnter()
+{
+	if (event.keyCode == 13)
+	{
+		document.getElementById("password").focus();
+	}
+}
+
+function processPasswordEnter()
+{
+	if (event.keyCode == 13)
+	{
+		document.getElementById("confirm-password").focus();
+	}
+}
+
+function processConfPasswordEnter()
+{
+	if (event.keyCode == 13)
+	{
+		doLogin();
+	}
+}

@@ -104,3 +104,20 @@ async function postData(url = "", data = {})
 	});
 	return response.json(); 
 }
+
+
+function processUsernameEnter()
+{
+	if (event.keyCode == 13)
+	{
+		document.getElementById("password").focus();
+	}
+}
+
+function processPasswordEnter()
+{
+	if (event.keyCode == 13)
+	{
+		doLogin();
+	}
+}

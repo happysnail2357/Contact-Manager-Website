@@ -23,23 +23,23 @@
 			
 			<div class="input-group form-align-f-name">
 				<label for="f-name">First Name</label>
-				<input type="text" name="f-name" id="f-name" placeholder="First Name" autocomplete="on">
+				<input type="text" name="f-name" id="f-name" placeholder="First Name" autocomplete="on" onkeydown="processFNameEnter()">
 				<p1 id="f-name-error"></p1>
 			</div>
 			<div class="input-group form-align-l-name">
 				<label for="l_name">Last Name</label>
-				<input type="text" name="l-name" id="l-name" placeholder="Last Name" autocomplete="on">
+				<input type="text" name="l-name" id="l-name" placeholder="Last Name" autocomplete="on" onkeydown="processLNameEnter()">
 				<p1 id="l-name-error"></p1>
 			</div>
 			<div class="input-group form-align-username">
 				<label for="username"> Username</label>
-				<input type="text" name="username" id="username" placeholder="Username" autocomplete="on">
+				<input type="text" name="username" id="username" placeholder="Username" autocomplete="on" onkeydown="processUsernameEnter()">
 				<p1 id="username-error"></p1>
 			</div>
 			<div class="input-group form-align-password">
 				<label for="password">Password</label>
-				<input type="password" name="password" id="password" placeholder="Password" autocomplete="on">
-				<input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" autocomplete="on">
+				<input type="password" name="password" id="password" placeholder="Password" autocomplete="on" onkeydown="processPasswordEnter()">
+				<input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" autocomplete="on" onkeydown="processConfPasswordEnter()">
 				<p1 id="password-error"></p1>
 			</div>
 

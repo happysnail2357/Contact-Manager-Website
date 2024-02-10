@@ -21,12 +21,12 @@
 		<form id="login-form" class="generic-form login-form fade-me-in">
 			<div class="input-group">
 				<label for="username">Username</label>
-				<input type="text" name="username" id="username" autocomplete="on">
+				<input type="text" name="username" id="username" autocomplete="on" onkeydown="processUsernameEnter()">
 				<p1 id="username-error"></p1>
 			</div>
 			<div class="input-group">
 				<label for="password">Password</label>
-				<input type="password" name="password" id="password" autocomplete="on">
+				<input type="password" name="password" id="password" autocomplete="on" onkeydown="processPasswordEnter()">
 				<p1 id="password-error"></p1>
 			</div>
 
