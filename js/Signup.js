@@ -112,11 +112,11 @@ function doLogin(){
 
 	postData(url, temp).then((data) => 
 	{
-		if(data.error != null){
+		if (data.error != '')
+		{
 			jsonObject=data;
 			saveCookie();
-			
-			window.location.href = "landing-page.html";
+			pageTransition("landing-page.html");
 		}
 	});
 }

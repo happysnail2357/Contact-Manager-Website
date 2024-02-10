@@ -53,7 +53,7 @@ function doLogin(){
 		{
 			jsonObject=data;
 			saveCookie();
-			window.location.href = "landing-page.html";
+			pageTransition("landing-page.html");
 		}
 		else
 		{
