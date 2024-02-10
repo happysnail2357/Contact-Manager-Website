@@ -1,7 +1,7 @@
 
 function pageTransition(pagename)
 {
-	setTimeout(changePage, 1000, pagename);
+	setTimeout(changePage, 700, pagename);
 
 	fadable = document.getElementsByClassName("fade-me-in");
 
