@@ -24,8 +24,8 @@ function doLogin(){
 	let password = document.getElementById("password").value;
 	
 	// Clear error messages if any
-	reportUsernameError('');
-	reportPasswordError('');
+	document.getElementById("username-error").textContent = '';
+	document.getElementById("password-error").textContent = '';
 	document.getElementById("username").style.borderColor = "#ccc";
 	document.getElementById("password").style.borderColor = "#ccc";
 	
