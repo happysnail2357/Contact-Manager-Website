@@ -5,12 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang&display=swap">
     <link rel="stylesheet" href="css/style.css">
-    <title>Logout Page</title>
+    <link rel="stylesheet" href="css/page.css">
+	
+	<script src="js/fader.js"></script>
+	
+    <title>Logout | All My Beaches</title>
 </head>
 <body>
-    <div class="container-one">
+	<header>
+		<a href="#" onclick="pageTransition('/')">All My Beaches</a>
+	</header>
+    <div class="container-one fade-me-in">
         <h1>You have successfully logged out</h1>
-        <p class="signup-link">To log back in, click <a href="login.html" class="login-link">Log in</a></p>
+        <p class="signup-link">To log back in, click <a href="#" onclick="pageTransition('login.html')" class="login-link">Log in</a></p>
     </div>
 </body>
 </html>
