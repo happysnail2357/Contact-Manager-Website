@@ -1,4 +1,11 @@
 
+// Redirect
+if(document.cookie != '')
+{
+    window.location.href = "landing-page.html";
+}
+
+
 const button = document.getElementById("sign-up-btn");
 const fnameInput = document.getElementById("f-name");
 const lnameInput = document.getElementById("l-name");
@@ -126,28 +133,27 @@ function saveCookie()
 	let minutes = 20;
 	let date = new Date();
 	date.setTime(date.getTime()+(minutes*60*1000));	
-	document.cookie = "firstName=" + jsonObject.firstName + ",lastName=" + jsonObject.lastName + ",userId=" + jsonObject.id + ",expires=" + date.toGMTString();
-	console.log('cookies saved!');
+	document.cookie = `user=firstName=${jsonObject.firstName},lastName=${jsonObject.lastName},userId=${jsonObject.id};expires=${date.toGMTString()};path=/;`;
 }
 
 async function postData(url = "", data = {}) 
 {
 	const response = await fetch(url, 
+	{
+		method: "POST", 
+		mode: "cors", 
+		cache: "no-cache", 
+		credentials: "omit", 
+		headers:
 		{
-			method: "POST", 
-			mode: "cors", 
-			cache: "no-cache", 
-			credentials: "omit", 
-			headers:
-			{
-				"Content-Type": "application/json",
-				
-			},
-			redirect: "follow", 
-			referrerPolicy: "no-referrer", 
-			body: JSON.stringify(data), 
-		});
+			"Content-Type": "application/json",
+			
+		},
+		redirect: "follow", 
+		referrerPolicy: "no-referrer", 
+		body: JSON.stringify(data), 
+	});
 
-		return response.json(); 
-	}
+	return response.json(); 
+}
 
