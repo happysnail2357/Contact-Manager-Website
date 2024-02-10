@@ -1,13 +1,15 @@
 
 const button = document.getElementById("login-btn");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
 
-if(button)
-{
-	button.addEventListener("click", doLogin);
+// Add event listeners
+if (button) button.addEventListener("click", doLogin);
+if (usernameInput) usernameInput.addEventListener("input", usernameInputRestrict);
+if (passwordInput) passwordInput.addEventListener("input", passwordInputRestrict);
 
-}
 
-let jsonObject;
+let jsonObject = null;
 
 
 function doLogin(){

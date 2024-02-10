@@ -1,12 +1,22 @@
 
 const button = document.getElementById("sign-up-btn");
+const fnameInput = document.getElementById("f-name");
+const lnameInput = document.getElementById("l-name");
+const usernameInput = document.getElementById("username");
+const passwordInput = document.getElementById("password");
+const confpasswordInput = document.getElementById("confirm-password");
 
-if(button)
-{
-	button.addEventListener("click", doLogin);
-}
+// Add event listeners
+if (button) button.addEventListener("click", doLogin);
+if (fnameInput) fnameInput.addEventListener("input", nameInputRestrict);
+if (lnameInput) lnameInput.addEventListener("input", nameInputRestrict);
+if (usernameInput) usernameInput.addEventListener("input", usernameInputRestrict);
+if (passwordInput) passwordInput.addEventListener("input", passwordInputRestrict);
+if (confpasswordInput) confpasswordInput.addEventListener("input", passwordInputRestrict);
+
 
 let jsonObject = null;
+
 
 function doLogin(){
 	let login = document.getElementById("username").value;
