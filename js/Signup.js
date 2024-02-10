@@ -106,8 +106,6 @@ function doLogin(){
 	}
 	
 	
-	
-	
 	let temp = {
 		'login':login,
 		'password':password,
@@ -119,11 +117,20 @@ function doLogin(){
 
 	postData(url, temp).then((data) => 
 	{
-		if (data.error != '')
+		if (data.error == '')
 		{
 			jsonObject=data;
 			saveCookie();
 			pageTransition("landing-page.html");
+		}
+		else if (data.error == 'A user with that login already exists.')
+		{
+			document.getElementById("username-error").textContent = "Username not available";
+			document.getElementById("username").style.borderColor = "red";
+		}
+		else
+		{
+			document.getElementById("password-error").textContent = "Error: contact administrator";
 		}
 	});
 }

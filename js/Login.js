@@ -34,14 +34,14 @@ function doLogin(){
 	// Check for empty fields
 	if (login == "")
 	{
-		reportUsernameError("Username Required");
+		document.getElementById("username-error").textContent = "Username required";
 		document.getElementById("username").style.borderColor = "red";
 		
 		missingField = true;
 	}
 	if (password == "")
 	{
-		reportPasswordError("Password Required");
+		document.getElementById("password-error").textContent = "Password required";
 		document.getElementById("password").style.borderColor = "red";
 		
 		missingField = true;
@@ -49,6 +49,7 @@ function doLogin(){
 	
 	if (missingField)
 		return;
+	
 
 	let temp = {login:login,password:password};
 
@@ -62,31 +63,18 @@ function doLogin(){
 			saveCookie();
 			pageTransition("landing-page.html");
 		}
-		else
+		else if (data.error == 'No Records Found')
 		{
-			reportPasswordError("Username or Password incorrect");
+			document.getElementById("password-error").textContent = "Username or Password incorrect";
 			document.getElementById("password").style.borderColor = "red";
 			document.getElementById("username").style.borderColor = "red";
 		}
-  
+		else
+		{
+			document.getElementById("password-error").textContent = "Error: contact administrator";
+		}
 	});
-	
 }
-
-function reportUsernameError(message)
-{
-	let errorp = document.getElementById("username-error");
-	
-	errorp.textContent = message;
-}
-
-function reportPasswordError(message)
-{
-	let errorp = document.getElementById("password-error");
-	
-	errorp.textContent = message;
-}
-
 
 
 function saveCookie()
