@@ -1,10 +1,13 @@
 
-//Gets UserId
-let result = (document.cookie).match(/userId=(\d+),/)
+// Redirect
 if(document.cookie == '')
 {
     window.location.href = "login.html";
 }
+
+
+//Gets UserId
+let result = (document.cookie).match(/userId=(\d+)/);
 const user_id =Number(result[1]);
 
 
@@ -619,7 +622,7 @@ $("#delete-btn-user").click(function(){
 
 function doLogout()
 {
-	document.cookie = "";
+	document.cookie = "user=;expires=Thu, 18 Dec 2013 12:00:00 UTC;path=/";
 	window.location.href = "log-out.html";
 }
 
