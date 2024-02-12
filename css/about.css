@@ -1,7 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap');
 
 *,*::before,*::after{
     padding:0px;
     margin:0px;
+}
+
+a{
+    text-decoration: none;
+    color:black;
+}
+a:hover{
+    color:#055A7F;
+}
+img{
+    width:150px;
+    height: 150px;
 }
 
 body{
@@ -10,12 +23,22 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    position:relative;
+    font-family: 'Poppins', sans-serif;
+
 }
 
+.home-page{
+    position: fixed;
+    top:20px;
+    font-size: 2rem;
+    font-weight: 900;
+
+}
 
 .wrapper{
     background-color:  #055A7F;
-    height: 130px;
+    height: 300px;
     overflow: hidden;
     position: relative;
     width: 100%;
@@ -29,14 +52,14 @@ body{
 .wrapper .track{
     display: flex;
 
-    animation:scroll-primary 25s .5s linear infinite;
+    animation:scroll-primary 50s .5s linear infinite;
 }
 
 
 .wrapper .track2{
     display: flex;
 
-    animation:scroll-primary 25s .5s linear infinite;
+    animation:scroll-primary 50s .5s linear infinite;
 }
 
  .wrapper::before, .wrapper::after{
@@ -57,10 +80,14 @@ body{
     transform: rotateZ(180deg);
 }
 .wrapper .member{
-    width: 150px;
-    height: 90px;
+    width: 200px;
+    height: auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
     margin-right: 50px;
 }
+
 
 .member .role{
     margin-bottom: 10px;
@@ -69,22 +96,32 @@ body{
 
 .member{
     font-size: 1.2rem;
+
+
     color:white;
+} 
+
+.member .name{
+    font-weight: 300;
+    
 }
 
+.member .role{
+    font-style: italic;
+}
 
 @keyframes scroll-primary{
     from{
         transform: translateX(0);
 
     }to{
-        transform:translateX(calc(-200px*6))
+        transform:translateX(calc(-250px*6))
     }
 }
 
 @keyframes scroll-secondary{
     from{
-        transform: translateX(calc(-200px*6));
+        transform: translateX(calc(-250px*6));
 
     }to{
         transform:translateX(0);
