@@ -24,8 +24,31 @@ header {
 	z-index: 10;
 }
 
-header > a {
+header .left {
+	width: auto;
+	height: 100%;
+	float: left;
 	text-align: left;
+}
+
+header .right {
+	width: auto;
+	height: 100%;
+	float: right;
+	text-align: right;
+}
+
+
+header .norm-text {
+	color: white;
+	font-family: 'Gowun Batang', 'Times New Roman', serif;
+	font-size: 25px;
+	font-weight: bold;
+	padding-right: 1em;
+}
+
+
+header .home-link {
 	line-height: 95px;
 	padding-left: .5em;
     color: white;
@@ -36,10 +59,25 @@ header > a {
 	font-weight: bold;
 	transition: font-size 0.5s;
 }
-
-header > a:hover {
+header .home-link:hover {
 	font-size: 38px;
 }
+
+header .page-link {
+	line-height: 95px;
+	padding-right: 1em;
+    color: white;
+	font-family: 'Gowun Batang', 'Times New Roman', serif;
+	font-size: 25px;
+	text-decoration: none;
+	font-style: italic;
+	font-weight: bold;
+	transition: font-size 0.5s;
+}
+header .page-link:hover {
+	font-size: 27px;
+}
+
 
 
 .centered-block {

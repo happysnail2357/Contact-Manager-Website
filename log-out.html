@@ -13,8 +13,18 @@
 </head>
 <body>
 	<header>
-		<a href="#" onclick="pageTransition('/')">All My Beaches</a>
+		<div class="left">
+			<a class="home-link" href="#" onclick="pageTransition('/')">All My Beaches</a>
+		</div>
+		<div class="right">
+			<a class="page-link" href="#" onclick="pageTransition('login.html')">Log In</a>
+			<a class="norm-text">|</a>
+			<a class="page-link" href="#" onclick="pageTransition('signup.html')">Signup</a>
+			<a class="norm-text">|</a>
+			<a class="page-link" href="#" onclick="pageTransition('about.html')">About Us</a>
+		</div>
 	</header>
+
     <div class="container-one fade-me-in">
         <h1>You have successfully logged out</h1>
         <p class="signup-link">To log back in, click <a href="#" onclick="pageTransition('login.html')" class="login-link">Log in</a></p>
