@@ -1,17 +1,12 @@
-
 // Redirect
 if(document.cookie == '')
 {
     window.location.href = "login.html";
 }
 
-
 //Gets UserId
 let result = (document.cookie).match(/userId=(\d+)/);
 const user_id =Number(result[1]);
-
-
-
 
 let jsonObject = "";
 
@@ -210,32 +205,23 @@ $("#search-input").on( "keyup change",function()
         });
     }
     else{
-        
-   
         url = "https://cardboardmc.com/LAMPAPI/GetContacts.php";
         postData(url, temp).then(data=>
         {
-                $("#t-body").empty();
-                currentpage =1;
-                state.page = currentpage;
-                state.querySet = data;
+            $("#t-body").empty();
+            currentpage =1;
+            state.page = currentpage;
+            state.querySet = data;
 
-                buildTable();
-                buttonVisibility(currentpage);
-
+            buildTable();
+            buttonVisibility(currentpage);
         }
         ).catch((e)=>
         {
             console.log("get contact api "+e);
         });
     }
-
-
 });
-
-
-
-
 
 $("#trash-icon").click(function(event){
 
@@ -245,7 +231,6 @@ $("#trash-icon").click(function(event){
     {
         return $(this).val();
     }).toArray();
-
 
     if(searchIDs!=0)
     {
@@ -275,18 +260,11 @@ $("#trash-icon").click(function(event){
             }).catch();
         });
         
-        
-
     }else{
         $("#warning-modal").modal("hide");
 
     }
-
-    
 });
-
-
-
 
 $('#userinfo').on('show.bs.modal', function (event) 
     {
@@ -296,7 +274,6 @@ $('#userinfo').on('show.bs.modal', function (event)
         //The emoji svg image is clicked
         $("#emoji-profile").click(function()
         {
-            
             emoji_index = emoji_index< emoji_length ?emoji_index:0;
 
             emoji_name = Object.keys(emojis)[emoji_index];
@@ -307,18 +284,14 @@ $('#userinfo').on('show.bs.modal', function (event)
             
         });
 
-        
         let button = $(event.relatedTarget); 
         let contact_user_id = button.attr("id");
 
         //Fills the data edit button is clicked
         if(button.attr('id') != "create-btn"){
-
-        
             
             emoji_name = $(`#t-row${contact_user_id}`).find("p").attr("value");
             $("#phone").text()
-
 
             $("#emoji-profile").html(emojis[emoji_name]);
             
@@ -329,15 +302,11 @@ $('#userinfo').on('show.bs.modal', function (event)
             $("#address").val($(`#t-row${contact_user_id}`).find(".r-address").text());
             $("#age").val($(`#t-row${contact_user_id}`).find(".r-age").text());
             $('#birth').val($(`#t-row${contact_user_id}`).find(".r-birth").text());
- 
-            
         }    
 
         if(button.attr("id")=='create-btn'){
             $("#emoji-profile").html(emojis["smiley"]);
-
         }
-
 
         $("form").off().on("submit", function(event){
             if($("#first").val() == 0 || $("#last").val() ==0 )
@@ -378,22 +347,17 @@ $('#userinfo').on('show.bs.modal', function (event)
                             "Birthday": $('#birth').val(),
                             "Emoji": emoji_name,
                             "ID": data.id
-
                         }
                         $("#t-body").empty();
-                       
-                        
+                           
                         state.querySet.unshift(get_contact_info);
                         currentpage =1;
                         buttonVisibility(currentpage);
                         state.page =currentpage;
                         buildTable();     
-                    
-
     
                     }).then(()=>
                     {
-
                         $("#userinfo").modal('hide');
                     }).catch((e)=>
                     {
@@ -405,7 +369,6 @@ $('#userinfo').on('show.bs.modal', function (event)
        
                     url = "https://cardboardmc.com/LAMPAPI/UpdateContact.php";     
                 
-                    
                     postData(url,get_contact_info).then(()=>
                     {
                         $("#userinfo").modal('hide');
@@ -423,7 +386,6 @@ $('#userinfo').on('show.bs.modal', function (event)
                             "ID": contact_user_id
                         }
 
-                       
                         let obj = state.querySet.find((o, i) => {
                             if (o.ID == get_contact_info.ID) {
                                 state.querySet[i] =get_contact_info;
@@ -448,15 +410,11 @@ $('#userinfo').on('show.bs.modal', function (event)
             event.preventDefault();
             
         });
-
-
-
     });
     
     $('#userinfo').on('hidden.bs.modal', function () {
         
         $(this).find('input').val('');
-        
     });
 
     //prevents non-integer input
@@ -474,8 +432,6 @@ $('#userinfo').on('show.bs.modal', function (event)
         e.which == 8 || 
         /[0-9]/.test(String.fromCharCode(e.which)); // numbers
     })
-
-
 
 //Standard format for each contact user
 function fill_in_table(jsonObject,table){
@@ -508,7 +464,6 @@ function fill_in_table(jsonObject,table){
     table.insertAdjacentHTML("beforeend",html);
        
 }
-
 
 //Requests data from API
 async function postData(url = "", data = {}) 
@@ -553,8 +508,6 @@ function clear_screen(){
     table.classList.add("d-none");
 
 }
-
-
 
 async function delete_list(url, searchIDs) {
 
@@ -605,8 +558,6 @@ function phoneNumberFormat(string){
 	return `(${string.substring(0,3)}) - ${string.substring(3,6)} - ${string.substring(6,10)}`
 }
 
-
-
 $("#delete-btn-user").click(function(){
     let url = "https://cardboardmc.com/LAMPAPI/DeleteUser.php";
 
@@ -618,19 +569,14 @@ $("#delete-btn-user").click(function(){
     });
 });
 
-
-
 function doLogout()
 {
 	document.cookie = "user=;expires=Thu, 18 Dec 2013 12:00:00 UTC;path=/";
 	window.location.href = "log-out.html";
 }
 
-
 function buttonVisibility(currentpage){
 
-
-    
     let MAX_PAGE = Math.ceil(state.querySet.length/state.rows);
 
     if(MAX_PAGE ==0){
@@ -651,9 +597,5 @@ function buttonVisibility(currentpage){
     }else{
         $("#left").removeClass("d-none");
         $("#header").addClass("d-none");
-
-
     }
-
-
 }
