@@ -188,24 +188,28 @@ $("#search-btn").on("click", function(){
             if(data.error !='Could not find any contacts.'){
 
 
+                currentpage =1;
+                state.page = currentpage;
 
                 state.querySet = data;
-
+                buttonVisibility(currentpage);
+                
                 buildTable();
             }else{
                 
                 currentpage =1;
                 state.page = currentpage;
                 MAX_PAGE =1;
-                state.querySet = "";
+                state.querySet = [];
             }
             buttonVisibility(currentpage);
            
             
         }).catch((e)=>{
-            console.log("search api " + e);
+        
             currentpage = 1;
-            state.querySet = "";
+            state.querySet = [];
+            state.page = currentpage;
             $("#t-body").empty();
             buttonVisibility(currentpage);
 
@@ -259,7 +263,10 @@ $("#search-input").on( "keyup change",function()
 
 
 
+                currentpage =1;
+                state.page = currentpage;
                 state.querySet = data;
+
 
                 buildTable();
             }else{
@@ -267,7 +274,7 @@ $("#search-input").on( "keyup change",function()
                 currentpage =1;
                 state.page = currentpage;
                 MAX_PAGE =1;
-                state.querySet = "";
+                state.querySet = [];
             }
             buttonVisibility(currentpage);
            
@@ -275,7 +282,7 @@ $("#search-input").on( "keyup change",function()
         }).catch((e)=>{
             console.log("search api " + e);
             currentpage = 1;
-            state.querySet = "";
+            state.querySet = [];
             $("#t-body").empty();
             buttonVisibility(currentpage);
 
@@ -333,6 +340,7 @@ $("#trash-icon").click(function(event){
                     state.querySet.splice(index,1);
                 }
 
+                
                 buttonVisibility(currentpage);
                 
                 $("#t-body").empty();
@@ -434,7 +442,7 @@ $('#userinfo').on('show.bs.modal', function (event)
                             "ID": data.id
                         }
                         $("#t-body").empty();
-                           
+                        
                         state.querySet.unshift(get_contact_info);
                         currentpage =1;
                         buttonVisibility(currentpage);
