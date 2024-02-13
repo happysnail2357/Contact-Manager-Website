@@ -343,7 +343,7 @@ $('#userinfo').on('show.bs.modal', function (event)
             if($("#first").val() == 0 || $("#last").val() ==0 )
             {
                 
-                $( ".modal-footer span" ).text( "Missing required field(s)." ).show().fadeOut( 8000 );
+                $( ".modal-footer span" ).text( "First and last name required." ).show().fadeOut( 8000 );
             }else if($("#phone").val()>0 && $("#phone").val()<10){
                 $( ".modal-footer span" ).text( "Invalid phone number." ).show().fadeOut( 8000 );
 
