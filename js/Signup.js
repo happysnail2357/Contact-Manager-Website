@@ -1,6 +1,6 @@
 
 // Redirect
-if(document.cookie != '')
+if(document.cookie != '' && document.cookie.includes("userId"))
 {
     window.location.href = "landing-page.html";
 }
