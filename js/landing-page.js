@@ -309,11 +309,13 @@ $('#userinfo').on('show.bs.modal', function (event)
         }
 
         $("form").off().on("submit", function(event){
-            if($("#first").val() == 0 || $("#last").val() ==0 )
-            {
-                
+
+         
+
+            if($("#first").val().length == 0 || $("#last").val().length ==0 )
+            {   
                 $( ".modal-footer span" ).text( "First and last name required." ).show().fadeOut( 8000 );
-            }else if($("#phone").val()>0 && $("#phone").val()<10){
+            }else if($("#phone").val().length >0 && $("#phone").val().length<10){
                 $( ".modal-footer span" ).text( "Invalid phone number." ).show().fadeOut( 8000 );
 
             }else{
