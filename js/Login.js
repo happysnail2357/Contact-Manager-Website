@@ -1,10 +1,9 @@
-
 // Redirect
-if(document.cookie != '')
+if(document.cookie != '' && document.cookie.includes("userId"))
 {
-    window.location.href = "landing-page.html";
+	window.location.href = "landing-page.html";
+	console.log(document.cookie);
 }
-
 
 const button = document.getElementById("login-btn");
 const usernameInput = document.getElementById("username");
@@ -15,9 +14,7 @@ if (button) button.addEventListener("click", doLogin);
 if (usernameInput) usernameInput.addEventListener("input", usernameInputRestrict);
 if (passwordInput) passwordInput.addEventListener("input", passwordInputRestrict);
 
-
 let jsonObject = null;
-
 
 function doLogin(){
 	let login = document.getElementById("username").value;
@@ -76,7 +73,6 @@ function doLogin(){
 	});
 }
 
-
 function saveCookie()
 {
 	let minutes = 20;
@@ -104,7 +100,6 @@ async function postData(url = "", data = {})
 	});
 	return response.json(); 
 }
-
 
 function processUsernameEnter()
 {
