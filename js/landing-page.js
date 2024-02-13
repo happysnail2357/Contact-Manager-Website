@@ -30,10 +30,17 @@ postData(url, temp).then(data=>
         buttonVisibility(currentpage);
 
         buildTable();
-
+ 
 
     }
-);
+).catch(()=>
+{
+    $("#t-body").empty();
+    $("#left").addClass("d-none");
+    $("#right").addClass("d-none");
+    
+
+})
 
 
 
@@ -145,7 +152,7 @@ function pagination(querySet, page, rows){
 
 
 $(".page-item").on("click",function(){
-    console.log($(this).text());
+
 
     if($(this).text()!=1){
         $("#header").addClass("d-none");
@@ -157,6 +164,76 @@ $(".page-item").on("click",function(){
     state.page =$(this).text();
     buildTable();
 })
+
+
+
+
+$("#search-btn").on("click", function(){
+    let input = $(this).val();
+ 
+
+    if(input.length != 0){
+
+       
+        url = "https://cardboardmc.com/LAMPAPI/Search.php";
+        
+        
+        let search_json = {"userId" : user_id, "query": input};
+    
+        postData(url,search_json).then((data)=>
+        {   
+            
+            $("#t-body").empty();
+           
+            if(data.error !='Could not find any contacts.'){
+
+
+
+                state.querySet = data;
+
+                buildTable();
+            }else{
+                
+                currentpage =1;
+                state.page = currentpage;
+                MAX_PAGE =1;
+                state.querySet = "";
+            }
+            buttonVisibility(currentpage);
+           
+            
+        }).catch((e)=>{
+            console.log("search api " + e);
+            currentpage = 1;
+            state.querySet = "";
+            $("#t-body").empty();
+            buttonVisibility(currentpage);
+
+        });
+    }
+    else{
+        url = "https://cardboardmc.com/LAMPAPI/GetContacts.php";
+        postData(url, temp).then(data=>
+        {
+            $("#t-body").empty();
+            currentpage =1;
+            state.page = currentpage;
+            state.querySet = data;
+
+            buildTable();
+            buttonVisibility(currentpage);
+        }
+        ).catch((e)=>
+        {
+            $("#t-body").empty();
+            $("#left").addClass("d-none");
+            $("#right").addClass("d-none");
+            
+        });
+    }
+});
+
+
 
 // After button clicked, sends a request to Search API
 $("#search-input").on( "keyup change",function()
@@ -218,10 +295,16 @@ $("#search-input").on( "keyup change",function()
         }
         ).catch((e)=>
         {
-            console.log("get contact api "+e);
+            $("#t-body").empty();
+            $("#left").addClass("d-none");
+            $("#right").addClass("d-none");
+            
         });
     }
 });
+
+
+
 
 $("#trash-icon").click(function(event){
 
